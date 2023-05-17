@@ -3,6 +3,7 @@ package com.example.brewbuddycs380;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,11 +14,14 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
+// java code for activity_question.xml
 public class QuestionActivity extends AppCompatActivity {
 
-    //global variables
+    //viewpager2 is used to allow swiping between fragments
     ViewPager2 viewPager2;
+    // the tabs on the top bar of the activity
     TabLayout tabLayout;
+    // the titles of the tabs across the top
     ArrayList<String> titles;
 
     @Override
@@ -25,14 +29,18 @@ public class QuestionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
 
+        // initialize the two objects
+        viewPager2 = findViewById(R.id.viewPager2);
+        tabLayout = findViewById(R.id.tabLayout);
+
         // find getStarted button from activity
         Button getStartedBtn = findViewById(R.id.getStarted);
 
-        getStartedBtn.setOnClickListener(new View.OnClickListener() {
 
+        // on click it starts the viewpage2, and hides the button so
+        // thr user can swipe between buttons
+        getStartedBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-            viewPager2 = findViewById(R.id.viewPager2);
-            tabLayout = findViewById(R.id.tabLayout);
             titles = new ArrayList<String>();
             titles.add("Q1");
             titles.add("Q2");
@@ -40,7 +48,6 @@ public class QuestionActivity extends AppCompatActivity {
             setViewPagerAdapter();
                 new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
                     @Override
-
                     public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                         tab.setText(titles.get(position));
                     }
@@ -48,16 +55,29 @@ public class QuestionActivity extends AppCompatActivity {
             getStartedBtn.setVisibility(View.GONE);
         }
     });
+        // used for incrementing the progress bar.
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+
+                // Update the progress bar based on the selected fragment
+                ProgressBar progressBar = findViewById(R.id.progressBar);
+                // Set the progress to fill proportional to the fragment
+                // (question 3 is 30% full etc.)
+                progressBar.setProgress((position+1)*10);
+            }
+        });
     }
     public void setViewPagerAdapter() {
         ViewPager2Adapter viewPager2Adapter = new ViewPager2Adapter(this);
-        ArrayList<Fragment> fragmentList = new ArrayList<>(); //creates an ArrayList of Fragments
+        //creates an ArrayList of Fragments
+        ArrayList<Fragment> fragmentList = new ArrayList<>();
         fragmentList.add(new question1());
         fragmentList.add(new question2());
         fragmentList.add(new question3());
-        viewPager2Adapter.setData(fragmentList); //sets the data for the adapter
+        //sets the data for the adapter
+        viewPager2Adapter.setData(fragmentList);
         viewPager2.setAdapter(viewPager2Adapter);
-
     }
-
 }

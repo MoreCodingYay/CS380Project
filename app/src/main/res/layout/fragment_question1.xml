@@ -7,14 +7,47 @@
     tools:context=".question1"
     android:id="@+id/frameLayout">
 
+    <ToggleButton
+        android:id="@+id/toggleButton"
+        android:layout_width="139dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="52dp"
+        android:checked="false"
+        android:text="ToggleButton"
+        android:textOff="Iced"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/question1Text"
+        app:layout_constraintVertical_bias="0.0"
+        android:background="@drawable/togglebutton_selector" />
+
+    <ToggleButton
+        android:id="@+id/toggleButton2"
+        android:layout_width="139dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/togglebutton_selector"
+        android:text="ToggleButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toggleButton"
+        app:layout_constraintVertical_bias="0.017" />
 
     <TextView
+        android:id="@+id/question1Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="num_1"
-        tools:layout_conversion_absoluteHeight="731dp"
-        tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_conversion_absoluteWidth="411dp" />
+        android:fontFamily="@font/roboto_bold"
+        android:gravity="center"
+        android:text="[Insert question in fragment_question1.xml]"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.368" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,7 +10,6 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity{
 
-
     @Override
     // first part that runs when app runs
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +22,7 @@ public class MainActivity extends AppCompatActivity{
         // set a click listener on that button
         loginBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // right now this just goes to the get started on questions page
-
+                // right now this just goes to the get started page
                 startActivity(new Intent(MainActivity.this, QuestionActivity.class));
 
             }

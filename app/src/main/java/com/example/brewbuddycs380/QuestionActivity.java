@@ -1,12 +1,14 @@
 package com.example.brewbuddycs380;
 
 import android.content.Intent;
+import android.os.Build;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
@@ -27,6 +29,11 @@ public class QuestionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // changes the status bar color so it looks prettier
+        if (Build.VERSION.SDK_INT >= 21)
+        {
+            getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.statusbar_question));
+        }
         setContentView(R.layout.activity_question);
 
         // initialize the two objects
@@ -38,7 +45,7 @@ public class QuestionActivity extends AppCompatActivity {
 
 
         // on click it starts the viewpage2, and hides the button so
-        // thr user can swipe between buttons
+        // the user can swipe between buttons
         getStartedBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             titles = new ArrayList<String>();

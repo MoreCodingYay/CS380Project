@@ -55,6 +55,7 @@ public class QuestionActivity extends AppCompatActivity {
                     }
                 }).attach();
             getStartedBtn.setVisibility(View.GONE);
+            findViewById(R.id.introText).setVisibility(View.GONE);
         }
     });
         // used for incrementing the progress bar.
@@ -66,8 +67,8 @@ public class QuestionActivity extends AppCompatActivity {
                 // Update the progress bar based on the selected fragment
                 ProgressBar progressBar = findViewById(R.id.progressBar);
                 // Set the progress to fill proportional to the fragment
-                // (question 3 is 30% full etc.)
-                progressBar.setProgress((position+1)*10);
+                // (question 3 is 60% full etc.)
+                progressBar.setProgress((position+1)*20);
             }
         });
     }

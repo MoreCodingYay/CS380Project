@@ -16,13 +16,16 @@ public class MainActivity extends AppCompatActivity{
     // first part that runs when app runs
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         // changes the status bar color so it looks prettier
         if (Build.VERSION.SDK_INT >= 21)
         {
             getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.statusbar_main));
         }
+
         // sets the app view to the main activity (login page)
         setContentView(R.layout.activity_main);
+
         // find login button from main activity
         Button loginBtn = (Button) findViewById(R.id.login);
         // set a click listener on that button
@@ -38,7 +41,7 @@ public class MainActivity extends AppCompatActivity{
         // set a click listener on that text
         createAccountTxt.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // go to creat account activity
+                // go to create account activity
                 startActivity(new Intent(MainActivity.this, createAccount.class));
 
             }

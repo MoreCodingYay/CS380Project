@@ -1,5 +1,6 @@
 package com.example.brewbuddycs380;
 
+import java.sql.*;
 import android.content.Intent;
 import android.os.Build;
 import android.view.View;
@@ -11,6 +12,22 @@ import androidx.core.content.ContextCompat;
 
 
 public class MainActivity extends AppCompatActivity{
+
+    // probably insecure way of connecting to db, might have to change later
+    static final String URL = "jdbc:mysql://sql9619545@sql9.freemysqlhosting.net/sql9619545";
+    static final String USER = "sql9619545";
+    static final String PASS = "TALaShDLMD";
+
+    // Connecting will look something like this
+    /*
+     try {
+                    Connection connect = DriverManager.getConnection(URL, USER, PASS);
+                    System.out.println("Connected to DB");
+                } catch (SQLException err) {
+                    err.printStackTrace();
+                    System.out.println("SQL Error Detected\t");
+                }
+     */
 
     @Override
     // first part that runs when app runs
@@ -25,6 +42,7 @@ public class MainActivity extends AppCompatActivity{
 
         // sets the app view to the main activity (login page)
         setContentView(R.layout.activity_main);
+
 
         // find login button from main activity
         Button loginBtn = (Button) findViewById(R.id.login);

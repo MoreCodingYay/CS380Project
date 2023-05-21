@@ -56,6 +56,7 @@ public class QuestionActivity extends AppCompatActivity {
             titles.add("Q5");
             titles.add("Q6");
             titles.add("Q7");
+            titles.add("S");
             setViewPagerAdapter();
                 new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
                     @Override
@@ -92,6 +93,7 @@ public class QuestionActivity extends AppCompatActivity {
         fragmentList.add(new question5());
         fragmentList.add(new question6());
         fragmentList.add(new question7());
+        fragmentList.add(new questionSubmit());
         //sets the data for the adapter
         viewPager2Adapter.setData(fragmentList);
         viewPager2.setAdapter(viewPager2Adapter);

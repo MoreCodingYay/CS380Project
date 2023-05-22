@@ -68,47 +68,8 @@ class Coffee implements Comparable<Coffee> {
         return coffee.similarityScore - this.similarityScore;
     }
 
-    // Method to return a String representation of the coffee's properties
-    public String getPropertiesString() {
-        StringBuilder sb = new StringBuilder();
-        for (Properties property : coffeeProperties) {
-            switch (property) {
-                case HOT:
-                    sb.append("hot, ");
-                    break;
-                case ICED:
-                    sb.append("iced, ");
-                    break;
-                case CREAMY:
-                    sb.append("cream, ");
-                    break;
-                case SWEET:
-                    sb.append("sugar, ");
-                    break;
-                case FLAVOR_FRUIT:
-                    sb.append("strawberry syrup, ");
-                    break;
-                case FLAVOR_CHOCOLATE:
-                    sb.append("chocolate syrup, ");
-                    break;
-                case FLAVOR_VANILLA:
-                    sb.append("vanilla syrup, ");
-                    break;
-                case FLAVOR_CARAMEL:
-                    sb.append("caramel syrup, ");
-                    break;
-                case DECAF:
-                    sb.append("decaf, ");
-                    break;
-            }
-        }
-        // this part cuts off the last comma and space
-        if (sb.length() > 0) {
-            sb.setLength(sb.length() - 2);
-        }
-        return sb.toString();
-    }
 }
+
 
 // Define a class with static methods to recommend coffees based on the user's preference
 public class CoffeeRecommender {
@@ -144,6 +105,47 @@ public class CoffeeRecommender {
 
         // Return the top recommended coffee object
         return recommendedCoffees.poll();
+    }
+
+    // Method to return a String representation of the coffee's properties
+    public static String getPropertiesString(Set<Properties> userPreferences) {
+        StringBuilder sb = new StringBuilder();
+        for (Properties property : userPreferences) {
+            switch (property) {
+                case HOT:
+                    sb.append("hot, ");
+                    break;
+                case ICED:
+                    sb.append("iced, ");
+                    break;
+                case CREAMY:
+                    sb.append("cream, ");
+                    break;
+                case SWEET:
+                    sb.append("sugar, ");
+                    break;
+                case FLAVOR_FRUIT:
+                    sb.append("strawberry syrup, ");
+                    break;
+                case FLAVOR_CHOCOLATE:
+                    sb.append("chocolate syrup, ");
+                    break;
+                case FLAVOR_VANILLA:
+                    sb.append("vanilla syrup, ");
+                    break;
+                case FLAVOR_CARAMEL:
+                    sb.append("caramel syrup, ");
+                    break;
+                case DECAF:
+                    sb.append("decaf, ");
+                    break;
+            }
+        }
+        // this part cuts off the last comma and space
+        if (sb.length() > 0) {
+            sb.setLength(sb.length() - 2);
+        }
+        return sb.toString();
     }
 
     // To store preferences in the database easier, this method converts the enums to a string representation

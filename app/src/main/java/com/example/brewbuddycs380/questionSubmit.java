@@ -9,10 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.lifecycle.ViewModelProvider;
+import java.util.*;
 
 
 public class questionSubmit extends Fragment {
     private SharedViewModel viewModel;
+    private static EnumSet<Properties> preferences = EnumSet.noneOf(Properties.class);
+
+    public static EnumSet<Properties> getPreferences(){
+        return preferences;
+    }
 
     public questionSubmit() {
         // Required empty public constructor
@@ -34,77 +40,76 @@ public class questionSubmit extends Fragment {
                 // On click, checks every toggle
                 Boolean icedState = viewModel.getIcedToggle().getValue();
                 if (icedState != null && icedState) {
-                    Log.d("myTag", "Iced");
+                    preferences.add(Properties.ICED);
                 }
 
                 Boolean hotState = viewModel.getHotToggle().getValue();
                 if (hotState != null && hotState) {
-                    Log.d("myTag", "Hot");
+                    preferences.add(Properties.HOT);
                 }
 
                 Boolean lightRoastState = viewModel.getLightRoastToggle().getValue();
                 if (lightRoastState != null && lightRoastState) {
-                    Log.d("myTag", "Light Roast");
+                    preferences.add(Properties.WEAK);
                 }
 
                 Boolean darkRoastState = viewModel.getDarkRoastToggle().getValue();
                 if (darkRoastState != null && darkRoastState) {
-                    Log.d("myTag", "Dark Roast");
+                    preferences.add(Properties.STRONG);
                 }
 
                 Boolean sweetState = viewModel.getSweetToggle().getValue();
                 if (sweetState != null && sweetState) {
-                    Log.d("myTag", "Sweet");
+                    preferences.add(Properties.SWEET);
                 }
 
                 Boolean mildSweetState = viewModel.getMildSweetToggle().getValue();
                 if (mildSweetState != null && mildSweetState) {
-                    Log.d("myTag", "Mild Sweet");
                 }
 
                 Boolean darkSweetState = viewModel.getDarkSweetToggle().getValue();
                 if (darkSweetState != null && darkSweetState) {
-                    Log.d("myTag", "Dark Sweet");
+                    preferences.add(Properties.BITTER);
                 }
 
                 Boolean creamState = viewModel.getCreamToggle().getValue();
                 if (creamState != null && creamState) {
-                    Log.d("myTag", "Cream");
+                    preferences.add(Properties.CREAMY);
                 }
 
                 Boolean blackState = viewModel.getBlackToggle().getValue();
                 if (blackState != null && blackState) {
-                    Log.d("myTag", "Black");
+                    preferences.add(Properties.BLACK);
                 }
 
                 Boolean decafState = viewModel.getDecafToggle().getValue();
                 if (decafState != null && decafState) {
-                    Log.d("myTag", "Decaf");
+                    preferences.add(Properties.DECAF);
                 }
 
                 Boolean foamState = viewModel.getFoamToggle().getValue();
                 if (foamState != null && foamState) {
-                    Log.d("myTag", "Foam");
+                    preferences.add(Properties.FOAM);
                 }
 
                 Boolean vanillaState = viewModel.getVanillaToggle().getValue();
                 if (vanillaState != null && vanillaState) {
-                    Log.d("myTag", "Vanilla");
+                    preferences.add(Properties.FLAVOR_VANILLA);
                 }
 
                 Boolean chocolateState = viewModel.getChocolateToggle().getValue();
                 if (chocolateState != null && chocolateState) {
-                    Log.d("myTag", "Chocolate");
+                    preferences.add(Properties.FLAVOR_CHOCOLATE);
                 }
 
                 Boolean caramelState = viewModel.getCaramelToggle().getValue();
                 if (caramelState != null && caramelState) {
-                    Log.d("myTag", "Caramel");
+                    preferences.add(Properties.FLAVOR_CARAMEL);
                 }
 
                 Boolean fruityState = viewModel.getFruityToggle().getValue();
                 if (fruityState != null && fruityState) {
-                    Log.d("myTag", "Fruity");
+                    preferences.add(Properties.FLAVOR_FRUIT);
                 }
                 // moves to a new activity
                 startActivity(new Intent(getActivity(), reccomendationScreen.class));

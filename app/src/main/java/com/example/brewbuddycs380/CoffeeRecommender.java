@@ -1,3 +1,5 @@
+package com.example.brewbuddycs380;
+
 import java.util.*;
 
 // Define an enum to represent the different properties that a coffee can have
@@ -173,19 +175,4 @@ public class CoffeeRecommender {
         }
         return userPreference;
     }
-    public static void main(String[] args) {
-        // Create a set representing the user's preference
-        Set<Properties> userPreference = EnumSet.of(Properties.SWEET, Properties.CREAMY, Properties.ICED,Properties.FLAVOR_CHOCOLATE);
-        Coffee coffee = new Coffee("test", userPreference);
-
-        // Print out the user's preference
-        System.out.println(coffee.name + " " + coffee.getPropertiesString());
-        System.out.println(recommendTopCoffee(userPreference).getName());
-
-        System.out.println(recommendTopCoffee(userPreference).getName() + " " + coffee.getPropertiesString());
-
-
-
-    }
-
 }

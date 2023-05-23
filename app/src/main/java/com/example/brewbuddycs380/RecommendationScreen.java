@@ -1,12 +1,10 @@
 package com.example.brewbuddycs380;
 
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class reccomendationScreen extends AppCompatActivity {
+public class RecommendationScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

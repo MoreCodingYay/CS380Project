@@ -13,22 +13,6 @@ import androidx.core.content.ContextCompat;
 
 public class MainActivity extends AppCompatActivity{
 
-    // probably insecure way of connecting to db, might have to change later
-    static final String URL = "jdbc:mysql://sql9619545@sql9.freemysqlhosting.net/sql9619545";
-    static final String USER = "sql9619545";
-    static final String PASS = "TALaShDLMD";
-
-    // Connecting will look something like this
-    /*
-     try {
-                    Connection connect = DriverManager.getConnection(URL, USER, PASS);
-                    System.out.println("Connected to DB");
-                } catch (SQLException err) {
-                    err.printStackTrace();
-                    System.out.println("SQL Error Detected\t");
-                }
-     */
-
     @Override
     // first part that runs when app runs
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +44,7 @@ public class MainActivity extends AppCompatActivity{
         createAccountTxt.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // go to create account activity
-                startActivity(new Intent(MainActivity.this, createAccount.class));
+                startActivity(new Intent(MainActivity.this, CreateAccount.class));
 
             }
         });

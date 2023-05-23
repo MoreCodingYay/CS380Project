@@ -107,7 +107,7 @@ public class CoffeeRecommender {
         return recommendedCoffees.poll();
     }
 
-    // Method to return a String representation of the coffee's properties
+    // Method to return a String representation of the user prefernces
     public static String getPropertiesString(Set<Properties> userPreferences) {
         StringBuilder sb = new StringBuilder();
         for (Properties property : userPreferences) {

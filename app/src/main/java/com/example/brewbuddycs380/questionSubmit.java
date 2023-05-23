@@ -112,7 +112,7 @@ public class questionSubmit extends Fragment {
                     preferences.add(Properties.FLAVOR_FRUIT);
                 }
                 // moves to a new activity
-                startActivity(new Intent(getActivity(), reccomendationScreen.class));
+                startActivity(new Intent(getActivity(), RecommendationScreen.class));
             }
         });
         return view;

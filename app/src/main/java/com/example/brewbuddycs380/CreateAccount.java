@@ -38,25 +38,31 @@ public class CreateAccount extends AppCompatActivity {
                 if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
                     // Display toast message asking user to fill in all fields
                     Toast.makeText(getApplicationContext(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
-                } else if (password.equals(confirmPassword)) { // Check if password and confirm password match
-                    try {
-                        // Create instance of UserService and attempt to create account
-                        UserService connect = new UserService();
-                        boolean success = connect.createAccount(username, password);
-                        if (success) {
-                            Toast.makeText(getApplicationContext(), "Account created successfully", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Account creation failed", Toast.LENGTH_SHORT).show();
-                        }
-                        connect.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    } catch (NoSuchAlgorithmException a) {
-                        a.printStackTrace();
-                    }
-                } else {
+                    return;
+                }
+
+                if (!password.equals(confirmPassword)) {
                     // Display toast message indicating passwords do not match
                     Toast.makeText(getApplicationContext(), "Passwords do not match", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                try {
+                    boolean success = UserService.createAccount(username, password);
+                    if (success) {
+                        Toast.makeText(getApplicationContext(), "Account created successfully", Toast.LENGTH_SHORT).show();
+                        usernameEditText.getText().clear();
+                        passwordEditText.getText().clear();
+                        confirmPasswordEditText.getText().clear();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Account creation failed", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (AccountTakenException e) {
+                    Toast.makeText(getApplicationContext(), "Account username taken", Toast.LENGTH_SHORT).show();
+                    return;
+                } catch (UserServiceException e) {
+                    Toast.makeText(getApplicationContext(), "Network error", Toast.LENGTH_SHORT).show();
+
                 }
             }
         });

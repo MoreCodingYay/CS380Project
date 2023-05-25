@@ -13,12 +13,9 @@ import java.util.*;
 
 
 public class questionSubmit extends Fragment {
+
     private SharedViewModel viewModel;
     private static EnumSet<Properties> preferences = EnumSet.noneOf(Properties.class);
-
-    public static EnumSet<Properties> getPreferences(){
-        return preferences;
-    }
 
     public questionSubmit() {
         // Required empty public constructor
@@ -112,7 +109,11 @@ public class questionSubmit extends Fragment {
                     preferences.add(Properties.FLAVOR_FRUIT);
                 }
                 // moves to a new activity
-                startActivity(new Intent(getActivity(), RecommendationScreen.class));
+                Intent intent = new Intent(getActivity(), RecommendationScreen.class);
+                // sends the preferences to the next activity in an array
+                intent.putExtra("selectedProperties", preferences.toArray(new Properties[0]));
+                startActivity(intent);
+
             }
         });
         return view;

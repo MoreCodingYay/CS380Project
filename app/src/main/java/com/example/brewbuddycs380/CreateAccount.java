@@ -1,11 +1,14 @@
 package com.example.brewbuddycs380;
 
+import android.content.Intent;
+import android.os.Build;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.core.content.ContextCompat;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
@@ -16,6 +19,12 @@ public class CreateAccount extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
+
+        // changes the status bar color so it looks prettier
+        if (Build.VERSION.SDK_INT >= 21)
+        {
+            getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.statusbar_main));
+        }
 
         // Find create account button
         Button createAccountButton = (Button) findViewById(R.id.createAccount);
@@ -54,12 +63,12 @@ public class CreateAccount extends AppCompatActivity {
                         usernameEditText.getText().clear();
                         passwordEditText.getText().clear();
                         confirmPasswordEditText.getText().clear();
+                        startActivity(new Intent(CreateAccount.this, QuestionActivity.class));
                     } else {
                         Toast.makeText(getApplicationContext(), "Account creation failed", Toast.LENGTH_SHORT).show();
                     }
                 } catch (AccountTakenException e) {
                     Toast.makeText(getApplicationContext(), "Account username taken", Toast.LENGTH_SHORT).show();
-                    return;
                 } catch (UserServiceException e) {
                     Toast.makeText(getApplicationContext(), "Network error", Toast.LENGTH_SHORT).show();
 

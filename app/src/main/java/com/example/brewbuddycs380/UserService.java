@@ -31,6 +31,8 @@ public class UserService {
 
     // Method to create a new account with the given username and password
     public static boolean createAccount(final String username, final String password) throws AccountTakenException, UserServiceException {
+        // Have to use executor because database won't connect on main network thread for some reason
+        // This object makes a new thread just for the database
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Future<Boolean> future = executor.submit(() -> {
             try (Connection connection = DriverManager.getConnection(URL, USER, PASS)) {

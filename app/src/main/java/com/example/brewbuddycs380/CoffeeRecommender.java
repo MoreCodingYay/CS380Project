@@ -22,30 +22,40 @@ enum Properties {
 
 // Define a class to represent a coffee object
 class Coffee implements Comparable<Coffee> {
-    String name; // The name of the coffee
-    int similarityScore; // The similarity score of the coffee with respect to the user's preference
-    Set<Properties> coffeeProperties; // The properties of the coffee
+    private String name; // The name of the coffee
+    private String description;
+    private int similarityScore; // The similarity score of the coffee with respect to the user's preference
+    private Set<Properties> coffeeProperties; // The properties of the coffee
 
     public String getName(){
         return name;
     }
 
+    public String getDescription(){
+        return description;
+    }
+    public void setSimilarityScore(int s){
+        this.similarityScore =  s;
+    }
+
     // Define an array of Coffee objects representing the different coffees available in the menu
     static Coffee[] MENU = new Coffee[]{
-            new Coffee("Drip Coffee", EnumSet.of(Properties.STRONG, Properties.BLACK)),
-            new Coffee("Espresso", EnumSet.of(Properties.STRONG, Properties.BLACK, Properties.BITTER)),
-            new Coffee("Americano", EnumSet.of(Properties.WEAK, Properties.BLACK)),
-            new Coffee("Latte", EnumSet.of(Properties.SWEET, Properties.CREAMY, Properties.WEAK)),
-            new Coffee("Cappuccino", EnumSet.of(Properties.SWEET, Properties.CREAMY, Properties.FOAM)),
-            new Coffee("Mocha", EnumSet.of(Properties.SWEET, Properties.CREAMY, Properties.FLAVOR_CHOCOLATE)),
-            new Coffee("Macchiato", EnumSet.of(Properties.STRONG, Properties.CREAMY, Properties.FOAM)),
-            new Coffee("Flat White", EnumSet.of(Properties.WEAK, Properties.CREAMY))
+            new Coffee("Drip Coffee", EnumSet.of(Properties.STRONG, Properties.BLACK), "A classic coffee made by brewing ground coffee beans with hot water. It has a strong and bold flavor. Drip coffee is a popular choice for those who enjoy a simple and straightforward cup of coffee."),
+            new Coffee("Espresso", EnumSet.of(Properties.STRONG, Properties.BLACK, Properties.BITTER), "A concentrated coffee made by forcing hot water through finely ground coffee beans. It has a rich and intense flavor. Espresso is often enjoyed on its own or used as a base for other coffee drinks."),
+            new Coffee("Americano", EnumSet.of(Properties.WEAK, Properties.BLACK), "A coffee made by adding hot water to an espresso shot. It has a milder flavor than espresso. Americano is a popular choice for those who enjoy the taste of espresso but prefer a less intense flavor."),
+            new Coffee("Latte", EnumSet.of(Properties.SWEET, Properties.CREAMY, Properties.WEAK), "A coffee made with espresso and steamed milk. It has a creamy and smooth texture. Latte is a popular choice for those who enjoy the taste of coffee but prefer a milder flavor and a creamy texture."),
+            new Coffee("Cappuccino", EnumSet.of(Properties.SWEET, Properties.CREAMY, Properties.FOAM), "A coffee made with espresso, steamed milk, and milk foam. It has a creamy texture and a frothy top. Cappuccino is a popular choice for those who enjoy the taste of coffee and the texture of milk foam."),
+            new Coffee("Mocha", EnumSet.of(Properties.SWEET, Properties.CREAMY, Properties.FLAVOR_CHOCOLATE), "A coffee made with espresso, steamed milk, and chocolate syrup. It has a sweet and chocolatey flavor. Mocha is a popular choice for those who enjoy the taste of coffee and chocolate."),
+            new Coffee("Macchiato", EnumSet.of(Properties.STRONG, Properties.CREAMY, Properties.FOAM), "A coffee made with espresso and a small amount of milk foam. It has a strong flavor with a creamy texture. Macchiato is often enjoyed on its own or used as a base for other coffee drinks."),
+            new Coffee("Flat White", EnumSet.of(Properties.WEAK, Properties.CREAMY), "A coffee made with espresso and steamed milk. It has a smooth and velvety texture. Flat White is a popular choice for those who enjoy the taste of coffee but prefer a smooth texture.")
     };
 
+
     // Constructor to create a new Coffee object
-    public Coffee(String name, Set<Properties> coffeeProperties) {
+    public Coffee(String name, Set<Properties> coffeeProperties, String description) {
         this.name = name;
         this.coffeeProperties = coffeeProperties;
+        this.description = description;
     }
 
     // Method to calculate the similarity score of the coffee with respect to the user's preference
@@ -81,7 +91,8 @@ public class CoffeeRecommender {
 
         // Calculate the similarity score for each coffee object in the menu
         for (Coffee coffee : Coffee.MENU) {
-            coffee.similarityScore = coffee.calculateSimilarityScore(userPreference);
+            int s = coffee.calculateSimilarityScore(userPreference);
+            coffee.setSimilarityScore(coffee.calculateSimilarityScore(userPreference));
             recommendedCoffees.add(coffee);
         }
 
@@ -99,7 +110,7 @@ public class CoffeeRecommender {
 
         // Calculate the similarity score for each coffee object in the menu
         for (Coffee coffee : Coffee.MENU) {
-            coffee.similarityScore = coffee.calculateSimilarityScore(userPreference);
+            coffee.setSimilarityScore(coffee.calculateSimilarityScore(userPreference));
             recommendedCoffees.add(coffee);
         }
 
@@ -108,15 +119,12 @@ public class CoffeeRecommender {
     }
 
     // Method to return a String representation of the user prefernces
-    public static String getPropertiesString(Set<Properties> userPreferences) {
+    public static String getPreferencesString(Set<Properties> userPreferences) {
         StringBuilder sb = new StringBuilder();
         for (Properties property : userPreferences) {
             switch (property) {
-                case HOT:
-                    sb.append("hot, ");
-                    break;
                 case ICED:
-                    sb.append("iced, ");
+                    sb.append("ice, ");
                     break;
                 case CREAMY:
                     sb.append("cream, ");

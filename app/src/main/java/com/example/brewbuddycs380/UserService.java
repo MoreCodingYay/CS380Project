@@ -35,31 +35,36 @@ public class UserService {
         // This object makes a new thread just for the database
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Future<Boolean> future = executor.submit(() -> {
-            try (Connection connection = DriverManager.getConnection(URL, USER, PASS)) {
-                // Check if the username is already taken
-                String checkSql = "SELECT * FROM sql9619545.logins WHERE username = ?";
-                PreparedStatement checkStatement = connection.prepareStatement(checkSql);
-                checkStatement.setString(1, username);
-                ResultSet checkResultSet = checkStatement.executeQuery();
-                if (checkResultSet.next()) {
-                    // Username is already taken
-                    throw new AccountTakenException("Username is already taken");
-                }
+            String hashedPassword = hashPassword(password);
+            return ClientAPI.getAPI().createUser(username, hashedPassword);
 
-                // Hash the password using the SHA-512 algorithm
-                String hashedPassword = hashPassword(password);
-                // SQL statement to insert a new record into the logins table
-                String sql = "INSERT INTO sql9619545.logins (username, password) VALUES (?, ?)";
-                PreparedStatement statement = connection.prepareStatement(sql);
-                statement.setString(1, username);
-                statement.setString(2, hashedPassword);
-                int rowsInserted = statement.executeUpdate();
-                return rowsInserted > 0;
-            } catch (SQLException e) {
-                throw new UserServiceException("SQLException: " + e.getMessage());
-            } catch (NoSuchAlgorithmException e) {
-                throw new UserServiceException("NoSuchAlgorithmException: " + e.getMessage());
-            }
+//            try (Connection connection = DriverManager.getConnection(URL, USER, PASS)) {
+//                // Check if the username is already taken
+//                String checkSql = "SELECT * FROM sql9619545.logins WHERE username = ?";
+//                PreparedStatement checkStatement = connection.prepareStatement(checkSql);
+//                checkStatement.setString(1, username);
+//                ResultSet checkResultSet = checkStatement.executeQuery();
+//                if (checkResultSet.next()) {
+//                    // Username is already taken
+//                    throw new AccountTakenException("Username is already taken");
+//                }
+//
+//                // Hash the password using the SHA-512 algorithm
+//                String hashedPassword = hashPassword(password);
+//                // SQL statement to insert a new record into the logins table
+//                String sql = "INSERT INTO sql9619545.logins (username, password) VALUES (?, ?)";
+//                PreparedStatement statement = connection.prepareStatement(sql);
+//                statement.setString(1, username);
+//                statement.setString(2, hashedPassword);
+//                int rowsInserted = statement.executeUpdate();
+//                return rowsInserted > 0;
+//            } catch (SQLException e) {
+//                throw new UserServiceException("SQLException: " + e.getMessage());
+//            } catch (NoSuchAlgorithmException e) {
+//                throw new UserServiceException("NoSuchAlgorithmException: " + e.getMessage());
+//            }
+
+
         });
         try {
             return future.get();
@@ -79,6 +84,8 @@ public class UserService {
     public static boolean login(final String username, final String password) throws UserServiceException {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Future<Boolean> future = executor.submit(() -> {
+
+            /*
             try (Connection connection = DriverManager.getConnection(URL, USER, PASS)) {
                 // Hash the password using the SHA-512 algorithm
                 String hashedPassword = hashPassword(password);
@@ -94,6 +101,15 @@ public class UserService {
             } catch (NoSuchAlgorithmException e) {
                 throw new UserServiceException("NoSuchAlgorithmException: " + e.getMessage());
             }
+
+             */
+            String hashedPassword = null;
+            try {
+                hashedPassword = hashPassword(password);
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            }
+            return ClientAPI.getAPI().login(username, hashedPassword);
         });
         try {
             return future.get();

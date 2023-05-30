@@ -1,3 +1,5 @@
+package com.example.brewbuddycs380;
+
 import java.io.*;
 import java.net.*;
 public class ClientAPI {
@@ -74,19 +76,6 @@ public class ClientAPI {
     }
     
     
-    /**
-     * test driver method
-     * @param args
-     */
-    public static void main(String[] args) {
-    	//System.out.println("resutlt create "+getAPI().createUser("steiner4", "123"));
-    	try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	System.out.println("result: "+getAPI().login("steiner4", "123"));
-    	
-    }
+
+
 }

@@ -1,12 +1,14 @@
 package com.example.brewbuddycs380;
 
+import android.widget.ImageView;
+
 import java.util.*;
 
 // Define an enum to represent the different properties that a coffee can have
 enum Properties {
     HOT(0), ICED(1), STRONG(2), WEAK(3), SWEET(4),
-    CREAMY(5), BLACK(6), FOAM(7), DECAF(8), BITTER(9),
-    FLAVOR_FRUIT(10), FLAVOR_CHOCOLATE(11), FLAVOR_CARAMEL(12), FLAVOR_VANILLA(13);
+    CREAMY(5), BLACK(6), FOAM(7), NOFOAM(8), DECAF(9), BITTER(10),
+    FLAVOR_FRUIT(11), FLAVOR_CHOCOLATE(12), FLAVOR_CARAMEL(13), FLAVOR_VANILLA(14);
 
     // Each property has an index value so it can be converted to a series of numbers to go in the database
     private final int index;
@@ -26,9 +28,14 @@ class Coffee implements Comparable<Coffee> {
     private String description;
     private int similarityScore; // The similarity score of the coffee with respect to the user's preference
     private Set<Properties> coffeeProperties; // The properties of the coffee
+    private int drawableId;
 
     public String getName(){
         return name;
+    }
+
+    public int getDrawableId(){
+        return drawableId;
     }
 
     public String getDescription(){
@@ -40,22 +47,24 @@ class Coffee implements Comparable<Coffee> {
 
     // Define an array of Coffee objects representing the different coffees available in the menu
     static Coffee[] MENU = new Coffee[]{
-            new Coffee("Drip Coffee", EnumSet.of(Properties.STRONG, Properties.BLACK), "A classic coffee made by brewing ground coffee beans with hot water. It has a strong and bold flavor. Drip coffee is a popular choice for those who enjoy a simple and straightforward cup of coffee."),
-            new Coffee("Espresso", EnumSet.of(Properties.STRONG, Properties.BLACK, Properties.BITTER), "A concentrated coffee made by forcing hot water through finely ground coffee beans. It has a rich and intense flavor. Espresso is often enjoyed on its own or used as a base for other coffee drinks."),
-            new Coffee("Americano", EnumSet.of(Properties.WEAK, Properties.BLACK), "A coffee made by adding hot water to an espresso shot. It has a milder flavor than espresso. Americano is a popular choice for those who enjoy the taste of espresso but prefer a less intense flavor."),
-            new Coffee("Latte", EnumSet.of(Properties.SWEET, Properties.CREAMY, Properties.WEAK), "A coffee made with espresso and steamed milk. It has a creamy and smooth texture. Latte is a popular choice for those who enjoy the taste of coffee but prefer a milder flavor and a creamy texture."),
-            new Coffee("Cappuccino", EnumSet.of(Properties.SWEET, Properties.CREAMY, Properties.FOAM), "A coffee made with espresso, steamed milk, and milk foam. It has a creamy texture and a frothy top. Cappuccino is a popular choice for those who enjoy the taste of coffee and the texture of milk foam."),
-            new Coffee("Mocha", EnumSet.of(Properties.SWEET, Properties.CREAMY, Properties.FLAVOR_CHOCOLATE), "A coffee made with espresso, steamed milk, and chocolate syrup. It has a sweet and chocolatey flavor. Mocha is a popular choice for those who enjoy the taste of coffee and chocolate."),
-            new Coffee("Macchiato", EnumSet.of(Properties.STRONG, Properties.CREAMY, Properties.FOAM), "A coffee made with espresso and a small amount of milk foam. It has a strong flavor with a creamy texture. Macchiato is often enjoyed on its own or used as a base for other coffee drinks."),
-            new Coffee("Flat White", EnumSet.of(Properties.WEAK, Properties.CREAMY), "A coffee made with espresso and steamed milk. It has a smooth and velvety texture. Flat White is a popular choice for those who enjoy the taste of coffee but prefer a smooth texture.")
+            new Coffee("Drip Coffee", EnumSet.of(Properties.STRONG, Properties.BLACK, Properties.CREAMY, Properties.NOFOAM, Properties.HOT, Properties.ICED), R.drawable.drip, "A classic coffee made by brewing ground coffee beans with hot water. It has a strong and bold flavor. Drip coffee is a popular choice for those who enjoy a simple and straightforward cup of coffee. It is often served black but can also be enjoyed with sugar or cream."),
+            new Coffee("Espresso", EnumSet.of(Properties.STRONG, Properties.BLACK, Properties.NOFOAM, Properties.BITTER, Properties.HOT), R.drawable.latte, "A concentrated coffee made by forcing hot water through finely ground coffee beans. It has a rich and intense flavor. Espresso is often enjoyed on its own or used as a base for other coffee drinks such as lattes and cappuccinos."),
+            new Coffee("Americano", EnumSet.of(Properties.WEAK, Properties.BLACK, Properties.NOFOAM, Properties.HOT, Properties.ICED), R.drawable.espresso, "A coffee made by adding hot water to an espresso shot. It has a milder flavor than espresso. Americano is a popular choice for those who enjoy the taste of espresso but prefer a less intense flavor. It can be served hot or iced."),
+            new Coffee("Latte", EnumSet.of(Properties.WEAK, Properties.SWEET, Properties.CREAMY, Properties.FOAM, Properties.HOT, Properties.ICED), R.drawable.latte, "A coffee made with espresso and steamed milk. It has a creamy and smooth texture. Latte is a popular choice for those who enjoy the taste of coffee but prefer a milder flavor and a creamy texture. It can be served hot or iced and is often topped with milk foam."),
+            new Coffee("Cappuccino", EnumSet.of(Properties.WEAK, Properties.SWEET, Properties.CREAMY, Properties.FOAM, Properties.HOT), R.drawable.cappuccino, "A coffee made with espresso, steamed milk, and milk foam. It has a creamy texture and a frothy top. Cappuccino is a popular choice for those who enjoy the taste of coffee and the texture of milk foam. It is typically served hot and can be topped with cinnamon or cocoa powder."),
+            new Coffee("Mocha", EnumSet.of(Properties.WEAK, Properties.SWEET, Properties.CREAMY, Properties.NOFOAM, Properties.FLAVOR_CHOCOLATE, Properties.HOT), R.drawable.mocha, "A coffee made with espresso, steamed milk, and chocolate syrup. It has a sweet and chocolatey flavor. Mocha is a popular choice for those who enjoy the taste of coffee and chocolate. It is typically served hot and can be topped with whipped cream."),
+            new Coffee("Macchiato", EnumSet.of(Properties.STRONG, Properties.CREAMY, Properties.FOAM, Properties.BITTER, Properties.FOAM, Properties.HOT), R.drawable.macchiato,"A coffee made with espresso and a small amount of milk foam. It has a strong flavor with a creamy texture. Macchiato is often enjoyed on its own or used as a base for other coffee drinks such as lattes and cappuccinos."),
+            new Coffee("Flat White", EnumSet.of(Properties.WEAK, Properties.SWEET, Properties.NOFOAM, Properties.CREAMY, Properties.HOT), R.drawable.latte,"A coffee made with espresso and steamed milk. It has a smooth and velvety texture. Flat White is a popular choice for those who enjoy the taste of coffee but prefer a smooth texture. It is typically served hot.")
     };
 
 
+
     // Constructor to create a new Coffee object
-    public Coffee(String name, Set<Properties> coffeeProperties, String description) {
+    public Coffee(String name, Set<Properties> coffeeProperties,int drawableId, String description) {
         this.name = name;
         this.coffeeProperties = coffeeProperties;
         this.description = description;
+        this.drawableId = drawableId;
     }
 
     // Method to calculate the similarity score of the coffee with respect to the user's preference

@@ -27,7 +27,7 @@ public class RecommendationScreen extends AppCompatActivity {
         Properties[] selectedPropertiesArray = (Properties[]) getIntent().getSerializableExtra("selectedProperties");
         // same preferences, in the form of an enumSet
         EnumSet<Properties> userPreferences = EnumSet.copyOf(Arrays.asList(selectedPropertiesArray));
-        //ClientAPI.getAPI().
+
 
         Coffee topChoice = CoffeeRecommender.recommendTopCoffee(userPreferences);
         String bodyDescription = topChoice.getDescription();

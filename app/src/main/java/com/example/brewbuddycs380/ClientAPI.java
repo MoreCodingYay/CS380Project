@@ -21,15 +21,21 @@ public class ClientAPI {
     }
 
     public String sendMessage(String msg) throws IOException {
+        System.out.println("is the client closed: "+clientSocket.isClosed());
         out.println(msg);
         String resp = in.readLine();
         return resp;
     }
 
-    public void stopConnection() throws IOException {
-        in.close();
-        out.close();
-        clientSocket.close();
+    public void stopConnection()  {
+        try {
+            in.close();
+            out.close();
+
+            clientSocket.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -50,7 +56,7 @@ public class ClientAPI {
     }
 
     public static ClientAPI getAPI(String ip, int port) {
-        if(apiSingleton==null)apiSingleton = new ClientAPI(ip,port);
+        if(apiSingleton==null||apiSingleton.clientSocket.isClosed())apiSingleton = new ClientAPI(ip,port);
         return apiSingleton;
 
     }
@@ -67,6 +73,8 @@ public class ClientAPI {
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+        } finally{
+            stopConnection();
         }
         throw new IllegalArgumentException("huh thats weird");
     }
@@ -78,6 +86,8 @@ public class ClientAPI {
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+        }finally{
+            stopConnection();
         }
         throw new IllegalArgumentException("huh thats weird");
     }
@@ -87,15 +97,21 @@ public class ClientAPI {
         }catch(IOException e) {
             e.printStackTrace();
             return null;
+        }finally{
+            stopConnection();
         }
     }
 
     public boolean setPreferences(final String username, final String preferences){
         try{
-            return Boolean.parseBoolean(sendMessage("setPreferences "+username+"\n"));
+            System.out.println("sending the set prefs message");
+            return Boolean.parseBoolean(sendMessage("setPreferences "+username+" "+preferences+"\n"));
         }catch(IOException e) {
+            System.out.println("prefs didn't work");
             e.printStackTrace();
             return false;
+        }finally{
+            stopConnection();
         }
     }
     public static void test() {

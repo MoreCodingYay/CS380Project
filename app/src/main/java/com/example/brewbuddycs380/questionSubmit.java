@@ -109,9 +109,15 @@ public class questionSubmit extends Fragment {
                 }
                 // moves to a new activity
                 Intent intent = new Intent(getActivity(), RecommendationScreen.class);
+                //puts the user preferences into the database, in an anonymous thread
+                new Thread(() -> {
+                    System.out.println("running anonymous thread");
+                    System.out.println("api req is: "+ClientAPI.getAPI().setPreferences(UserService.getUsername(), CoffeeRecommender.userPreferenceToString(preferences)));
+                }).start();
                 // sends the preferences to the next activity in an array
                 intent.putExtra("selectedProperties", preferences.toArray(new Properties[0]));
                 startActivity(intent);
+
 
             }
         });

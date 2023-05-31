@@ -1,13 +1,15 @@
 package com.example.brewbuddycs380;
 
+
+
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
 import java.net.*;
 public class ClientAPI {
-//	public static final String ip = "10.10.43.248";
+    //	public static final String ip = "10.10.43.248";
 //	public static final int port = 6666;
-//	
-	private Socket clientSocket;
+//
+    private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
 
@@ -29,58 +31,74 @@ public class ClientAPI {
         out.close();
         clientSocket.close();
     }
-    
-    
+
+
     private static ClientAPI apiSingleton;
     public ClientAPI(String ip, int port){
-    	try {
-			startConnection(ip,port);
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
+        try {
+            startConnection(ip,port);
+        } catch (UnknownHostException e) {
+            // TODO Auto-generated catch block
             System.out.println(" exception : "+e.getMessage());
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
             System.out.println(" exception : "+e.getMessage());
-			e.printStackTrace();
-		}
-    	
+            e.printStackTrace();
+        }
+
     }
-    
+
     public static ClientAPI getAPI(String ip, int port) {
-    	if(apiSingleton==null)apiSingleton = new ClientAPI(ip,port);
-    	return apiSingleton;
-    	
+        if(apiSingleton==null)apiSingleton = new ClientAPI(ip,port);
+        return apiSingleton;
+
     }
-    
+
     public static ClientAPI getAPI() {
-    	return getAPI("165.1.71.117",6666);
+        return getAPI("10.10.43.248",6666);
     }
-    
+
     public boolean login(final String username, final String password) {
-    	try {
-			 String gotMessage = (getAPI().sendMessage("login "+username+" "+password+"\n"));
-			 System.out.println("message gotten back is: "+gotMessage);
-			 return Boolean.parseBoolean(gotMessage);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	throw new IllegalArgumentException("huh thats weird");
+        try {
+            String gotMessage = (this.sendMessage("login "+username+" "+password+"\n"));
+            System.out.println("message gotten back is: "+gotMessage);
+            return Boolean.parseBoolean(gotMessage);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException("huh thats weird");
     }
-    
+
     public boolean createUser(final String username, final String password) {
-    	try {
+        try {
             System.out.println("trying to create user in api");
-			return Boolean.parseBoolean(getAPI().sendMessage("createUser "+username+" "+password+"\n"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	throw new IllegalArgumentException("huh thats weird");
+            return Boolean.parseBoolean(this.sendMessage("createUser "+username+" "+password+"\n"));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException("huh thats weird");
     }
-    
-    
+    public String getPreferences(final String username) {
+        try {
+            return this.sendMessage("preferences "+username+"\n");
+        }catch(IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public static void test() {
+        ClientAPI api = getAPI();
+        System.out.println("could create user? "+api.createUser("testUser","123"));
+        System.out.println("could log in? " + api.login("testUser", "123"));
+    }
+
+    public static void main(String[] args) {
+        test();
+    }
 
 
 }
+

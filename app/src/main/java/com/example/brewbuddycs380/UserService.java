@@ -29,6 +29,17 @@ public class UserService {
     static final String USER = "sql9619545";
     static final String PASS = "TALaShDLMD";
 
+    public static String getUsername() {
+        return savedUsername;
+    }
+
+    private static String savedUsername = "";
+
+    public static boolean isLoggedIn() {
+        return loggedIn;
+    }
+
+    private static boolean loggedIn = false;
     // Method to create a new account with the given username and password
     public static boolean createAccount(final String username, final String password) throws AccountTakenException, UserServiceException {
         // Have to use executor because database won't connect on main network thread for some reason
@@ -36,7 +47,12 @@ public class UserService {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Future<Boolean> future = executor.submit(() -> {
             String hashedPassword = hashPassword(password);
-            return ClientAPI.getAPI().createUser(username, hashedPassword);
+            boolean success =  ClientAPI.getAPI().createUser(username, hashedPassword);
+            if(success){
+                loggedIn=true;
+                savedUsername=username;
+            }
+            return success;
 
 //            try (Connection connection = DriverManager.getConnection(URL, USER, PASS)) {
 //                // Check if the username is already taken
@@ -112,7 +128,13 @@ public class UserService {
             return ClientAPI.getAPI().login(username, hashedPassword);
         });
         try {
-            return future.get();
+            if(future.get()){
+                savedUsername = username;
+                loggedIn=true;
+                return true;
+            }
+            return false;
+
         } catch (Exception e) {
             if (e.getCause() instanceof UserServiceException) {
                 throw (UserServiceException) e.getCause();

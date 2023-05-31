@@ -56,7 +56,7 @@ public class ClientAPI {
     }
 
     public static ClientAPI getAPI() {
-        return getAPI("10.10.43.248",6666);
+        return getAPI("165.1.71.117",6666);
     }
 
     public boolean login(final String username, final String password) {
@@ -89,15 +89,22 @@ public class ClientAPI {
             return null;
         }
     }
+
+    public boolean setPreferences(final String username, final String preferences){
+        try{
+            return Boolean.parseBoolean(sendMessage("setPreferences "+username+"\n"));
+        }catch(IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
     public static void test() {
         ClientAPI api = getAPI();
         System.out.println("could create user? "+api.createUser("testUser","123"));
         System.out.println("could log in? " + api.login("testUser", "123"));
     }
 
-    public static void main(String[] args) {
-        test();
-    }
+
 
 
 }

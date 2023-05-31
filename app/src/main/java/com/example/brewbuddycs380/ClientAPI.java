@@ -112,6 +112,7 @@ public class ClientAPI {
             return false;
         }finally{
             stopConnection();
+            //
         }
     }
     public static void test() {

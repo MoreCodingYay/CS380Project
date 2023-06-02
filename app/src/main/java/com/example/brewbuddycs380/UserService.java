@@ -34,7 +34,71 @@ public class UserService {
     }
 
     private static String savedUsername = "";
+    private static String savedPrefs = "";
 
+    public static LoggedInState getLoggedInState() {
+        return state;
+    }
+
+    private static LoggedInState state = LoggedInState.notLoggedIn;
+
+    /**
+     * logged in state state machine function
+     * if logged in but haven't retrived prefs, retrieves them updates state
+     * if already retrieved prefs, returns them
+     * otherwise, returns empty string
+     * @return
+     */
+    public static String getPrefs(){
+        System.out.println("runnig getprefs" + (state==LoggedInState.loggedInNoPrefs));
+        if(state==LoggedInState.loggedInPrefsRetrieved){
+            System.out.println("already retrieved");
+            return savedPrefs;
+        }else if(state==LoggedInState.loggedInNoPrefs||state==LoggedInState.loggedInHavePrefs){
+            System.out.println("logging in no prefs getting them");
+            savedPrefs = ClientAPI.getAPI().getPreferences(savedUsername);
+
+            if(savedPrefs=="null"||savedPrefs=="NULL"||savedPrefs==""||savedPrefs=="Null"){
+                //if there aren't any prefs saved for the user
+                //only called if a user created an account and then never submitted their questionaire
+                state=LoggedInState.loggedInNoPrefs;
+                System.out.println("didn't get prefs");
+                //makes sure saved prefs is back to being our actual null state
+                savedPrefs="";
+
+            }else {
+                //if they do have non null preferences
+                state = LoggedInState.loggedInPrefsRetrieved;
+                System.out.println("successfully retrieved prefs");
+            }
+            return savedPrefs;
+        }else{
+            System.out.println("else???");
+            return "";
+        }
+    }
+
+    /**
+     * updates preferences in the database in a thread, and updates the preferences variable in userservice.
+     * @param preferences
+     * @return
+     */
+    public static boolean updatePreferences(String preferences){
+        new Thread(() -> {
+            System.out.println("running anonymous thread");
+            System.out.println("api req is: "+ClientAPI.getAPI().setPreferences(UserService.getUsername(), preferences));
+        }).start();
+        savedPrefs=preferences;
+        state=LoggedInState.loggedInPrefsRetrieved;
+        return true;
+    }
+    /**
+     *
+     * @return whether or not the user has taken the preferences test before and has some on file
+     */
+    public static boolean haveRecordedPrefs(){
+        return state==LoggedInState.loggedInHavePrefs;
+    }
     public static boolean isLoggedIn() {
         return loggedIn;
     }
@@ -51,6 +115,7 @@ public class UserService {
             if(success){
                 loggedIn=true;
                 savedUsername=username;
+
             }
             return success;
 
@@ -125,14 +190,21 @@ public class UserService {
             } catch (NoSuchAlgorithmException e) {
                 throw new RuntimeException(e);
             }
-            return ClientAPI.getAPI().login(username, hashedPassword);
+
+            boolean loggedIn = ClientAPI.getAPI().login(username, hashedPassword);
+            savedUsername = username;
+            state=LoggedInState.loggedInNoPrefs;
+            getPrefs();
+            return loggedIn;
         });
         try {
             if(future.get()){
-                savedUsername = username;
+                System.out.println("updateing user state: "+ UserService.getLoggedInState());
+
                 loggedIn=true;
                 return true;
             }
+            savedUsername = "";
             return false;
 
         } catch (Exception e) {

@@ -22,12 +22,17 @@ public class RecommendationScreen extends AppCompatActivity {
         RatingBar ratingBar = findViewById(R.id.ratingBar);
 
         ratingBar.setRating(4.5F);
+
+       //this thing is unnecessary probably.
         // gets data passed to it from the questionSubmit class
         // this is selected preferences in the form of an array
         Properties[] selectedPropertiesArray = (Properties[]) getIntent().getSerializableExtra("selectedProperties");
-        // same preferences, in the form of an enumSet
-        EnumSet<Properties> userPreferences = EnumSet.copyOf(Arrays.asList(selectedPropertiesArray));
+        //end unnecessary
 
+
+        // same preferences, in the form of an enumSet
+        //EnumSet<Properties> userPreferences = EnumSet.copyOf(Arrays.asList(selectedPropertiesArray));
+        EnumSet<Properties> userPreferences = (EnumSet<Properties>) CoffeeRecommender.stringToUserPreference(UserService.getPrefs());
 
         Coffee topChoice = CoffeeRecommender.recommendTopCoffee(userPreferences);
         String bodyDescription = topChoice.getDescription();

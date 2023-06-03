@@ -92,7 +92,7 @@ class Coffee implements Comparable<Coffee> {
 
 // Define a class with static methods to recommend coffees based on the user's preference
 public class CoffeeRecommender {
-    public static Coffee[] recommendCoffee(Set<Properties> userPreference) {
+    public static Coffee[] recommend5Coffee(Set<Properties> userPreference) {
         // Create a priority queue to store the recommended coffee objects
         // I chose this because it automatically sorts the coffee objects
         // based on similarityScore to the userPreferences

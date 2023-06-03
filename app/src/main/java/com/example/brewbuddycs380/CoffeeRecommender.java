@@ -78,6 +78,13 @@ class Coffee implements Comparable<Coffee> {
         return similarityScore;
     }
 
+    /**
+     *
+     * @return the properties of this coffee, as a constant.
+     */
+    public final Set<Properties> getCoffeeProperties(){
+        return this.coffeeProperties;
+    }
     // Return the difference between the similarity scores of the two coffees
     // A positive value means this coffee has a lower similarity score than the coffee being compared to
     // A negative value means this coffee has a higher similarity score than the coffee being compared to

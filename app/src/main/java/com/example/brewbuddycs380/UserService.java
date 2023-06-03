@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -41,6 +42,8 @@ public class UserService {
     }
 
     private static LoggedInState state = LoggedInState.notLoggedIn;
+
+    public static ArrayList<Coffee> shoppingCart = new ArrayList<Coffee>();
 
     /**
      * logged in state state machine function
@@ -217,6 +220,25 @@ public class UserService {
         }
     }
 
+    /**
+     * adds coffee to the cart
+     * @param coffee
+     */
+    public static void addToCart(Coffee coffee){
+        shoppingCart.add(coffee);
+    }
+
+    /**
+     * updates the user's preferences with the coffee's they selected.
+     * @return
+     */
+    public static boolean checkOut(){
+        if(shoppingCart.size()==0)return false;
+        for(Coffee i : shoppingCart){
+
+        }
+        return true;
+    }
     // Helper method to hash a password using the SHA-512 algorithm
     private static String hashPassword(String password) throws NoSuchAlgorithmException {
         // Get an instance of the SHA-512 message digest

@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.BrewBuddyCS380"
-        parent="Theme.MaterialComponents.DayNight.NoActionBar">
+           parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/brown</item>
         <item name="colorPrimaryVariant">@color/light_brown</item>
@@ -15,5 +15,26 @@
         <!-- Background color. -->
         <item name="android:windowBackground">@color/light_brown</item>
 
+    </style>
+    <style name="Theme.BrewBuddyCS380.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.BrewBuddyCS380.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="Theme.BrewBuddyCS380.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="Theme.BrewBuddyCS380.AppWidgetContainerParent" parent="@android:style/Theme.DeviceDefault">
+        <!-- Radius of the outer bound of widgets to make the rounded corners -->
+        <item name="appWidgetRadius">16dp</item>
+        <!--
+        Radius of the inner view's bound of widgets to make the rounded corners.
+        It needs to be 8dp or less than the value of appWidgetRadius
+        -->
+        <item name="appWidgetInnerRadius">8dp</item>
+    </style>
+
+    <style name="Theme.BrewBuddyCS380.AppWidgetContainer"
+           parent="Theme.BrewBuddyCS380.AppWidgetContainerParent">
+        <!-- Apply padding to avoid the content of the widget colliding with the rounded corners -->
+        <item name="appWidgetPadding">16dp</item>
     </style>
 </resources>

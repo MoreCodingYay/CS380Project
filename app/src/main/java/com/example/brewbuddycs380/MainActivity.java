@@ -56,7 +56,16 @@ public class MainActivity extends AppCompatActivity{
                     if (success) {
                         usernameEditText.getText().clear();
                         passwordEditText.getText().clear();
-                        startActivity(new Intent(MainActivity.this, QuestionActivity.class));
+                        System.out.println("logged in state is: "+UserService.getLoggedInState());
+                        if(UserService.getLoggedInState()==LoggedInState.loggedInPrefsRetrieved){
+
+                            //if the logged in user already has preferences, move to the recommendation screen
+                            startActivity(new Intent(MainActivity.this, RecommendationScreen.class));
+                        }else{
+                            //if they don't have any preferences, move to the question screen
+                            startActivity(new Intent(MainActivity.this, QuestionActivity.class));
+                        }
+
                     } else {
                         Toast.makeText(getApplicationContext(), "Login failed", Toast.LENGTH_SHORT).show();
                     }

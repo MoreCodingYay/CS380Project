@@ -12,11 +12,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 
-
+/**
+ * The main activity of the BrewBuddy app, responsible for user login and account creation.
+ */
 public class MainActivity extends AppCompatActivity{
 
+    /**
+     * Called when the activity is starting.
+     *
+     * @param savedInstanceState the saved instance state Bundle
+     */
     @Override
-    // first part that runs when app runs
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -39,7 +45,7 @@ public class MainActivity extends AppCompatActivity{
                 EditText usernameEditText = (EditText) findViewById(R.id.username);
                 EditText passwordEditText = (EditText) findViewById(R.id.password);
 
-                // Get text from uusername and passwordEditText fields
+                // Get text from username and passwordEditText fields
                 String username = usernameEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
 
@@ -59,7 +65,7 @@ public class MainActivity extends AppCompatActivity{
                         System.out.println("logged in state is: "+UserService.getLoggedInState());
                         if(UserService.getLoggedInState()==LoggedInState.loggedInPrefsRetrieved){
 
-                            //if the logged in user already has preferences, move to the recommendation screen
+                            //if the logged-in user already has preferences, move to the recommendation screen
                             startActivity(new Intent(MainActivity.this, RecommendationScreen.class));
                         }else{
                             //if they don't have any preferences, move to the question screen
@@ -82,7 +88,7 @@ public class MainActivity extends AppCompatActivity{
         createAccountTxt.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // go to create account activity
-                startActivity(new Intent(MainActivity.this, CreateAccount.class));
+                startActivity(new Intent(MainActivity.this, QuestionActivity.class));
 
             }
         });

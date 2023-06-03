@@ -8,32 +8,58 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.lifecycle.ViewModelProvider;
-import java.util.*;
+import java.util.EnumSet;
 
-
+/**
+ * A fragment that handles the submission of user preferences in the BrewBuddy app.
+ */
 public class questionSubmit extends Fragment {
 
     private SharedViewModel viewModel;
     private static EnumSet<Properties> preferences = EnumSet.noneOf(Properties.class);
 
+    /**
+     * Default constructor for the questionSubmit fragment.
+     * Required empty public constructor.
+     */
     public questionSubmit() {
-        // Required empty public constructor
     }
 
+    /**
+     * Called when the fragment is created.
+     * Initializes the viewModel using the ViewModelProvider.
+     *
+     * @param savedInstanceState the saved instance state Bundle
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
     }
 
-    // Gets all the input for the toggle buttons in every fragment
+    /**
+     * Called when the fragment's view is created.
+     * Inflates the layout for the fragment and sets an OnClickListener for the submit button.
+     *
+     * @param inflater           the LayoutInflater object that can be used to inflate any views in the fragment
+     * @param container          the parent view that the fragment's UI should be attached to
+     * @param savedInstanceState the saved instance state Bundle
+     * @return the inflated View for the fragment
+     */
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_question_submit, container, false);
         Button submitBtn = (Button) view.findViewById(R.id.submit);
         submitBtn.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Called when the submit button is clicked.
+             * Retrieves the state of toggle buttons and adds the selected preferences to the preferences set.
+             * Starts the RecommendationScreen activity and passes the selected preferences as an extra.
+             *
+             * @param v the View object that was clicked
+             */
             public void onClick(View v) {
-                // On click, checks every toggle
                 Boolean icedState = viewModel.getIcedToggle().getValue();
                 if (icedState != null && icedState) {
                     preferences.add(Properties.ICED);
@@ -107,15 +133,11 @@ public class questionSubmit extends Fragment {
                 if (fruityState != null && fruityState) {
                     preferences.add(Properties.FLAVOR_FRUIT);
                 }
-                // moves to a new activity
+
                 Intent intent = new Intent(getActivity(), RecommendationScreen.class);
-                //puts the user preferences into the database and updates the preferences string in the userservice class
                 UserService.updatePreferences(CoffeeRecommender.userPreferenceToString(preferences));
-                // sends the preferences to the next activity in an array
                 intent.putExtra("selectedProperties", preferences.toArray(new Properties[0]));
                 startActivity(intent);
-
-
             }
         });
         return view;

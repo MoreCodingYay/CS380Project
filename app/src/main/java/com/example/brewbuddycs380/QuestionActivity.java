@@ -16,75 +16,71 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
-// java code for activity_question.xml
+/**
+ * The activity that handles the question flow in the BrewBuddy app.
+ */
 public class QuestionActivity extends AppCompatActivity {
 
-    //viewpager2 is used to allow swiping between fragments
-    ViewPager2 viewPager2;
-    // the tabs on the top bar of the activity
-    TabLayout tabLayout;
-    // the titles of the tabs across the top
-    ArrayList<String> titles;
+    private ViewPager2 viewPager2;
+    private TabLayout tabLayout;
+    private ArrayList<String> titles;
 
+    /**
+     * Called when the activity is created.
+     *
+     * @param savedInstanceState the saved instance state Bundle
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // changes the status bar color so it looks prettier
-        if (Build.VERSION.SDK_INT >= 21)
-        {
-            getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.statusbar_question));
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.statusbar_question));
         }
         setContentView(R.layout.activity_question);
 
-        // initialize the two objects
         viewPager2 = findViewById(R.id.viewPager2);
         tabLayout = findViewById(R.id.tabLayout);
 
-        // find getStarted button from activity
         Button getStartedBtn = findViewById(R.id.getStarted);
-
-
-        // on click it starts the viewpage2, and hides the button so
-        // the user can swipe between buttons
         getStartedBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
-            titles = new ArrayList<String>();
-            titles.add("Q1");
-            titles.add("Q2");
-            titles.add("Q3");
-            titles.add("Q4");
-            titles.add("Q5");
-            titles.add("Q6");
-            titles.add("Q7");
-            titles.add("S");
-            setViewPagerAdapter();
+                titles = new ArrayList<String>();
+                titles.add("Q1");
+                titles.add("Q2");
+                titles.add("Q3");
+                titles.add("Q4");
+                titles.add("Q5");
+                titles.add("Q6");
+                titles.add("Q7");
+                titles.add("S");
+                setViewPagerAdapter();
                 new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
                     @Override
                     public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                         tab.setText(titles.get(position));
                     }
                 }).attach();
-            getStartedBtn.setVisibility(View.GONE);
-            findViewById(R.id.introText).setVisibility(View.GONE);
-        }
-    });
-        // used for incrementing the progress bar.
+                getStartedBtn.setVisibility(View.GONE);
+                findViewById(R.id.introText).setVisibility(View.GONE);
+            }
+        });
+
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-
-                // Update the progress bar based on the selected fragment
                 ProgressBar progressBar = findViewById(R.id.progressBar);
-                // Set the progress to fill proportional to the fragment
-                // (question 3 is 60% full etc.)
-                progressBar.setProgress((position+1)*15);
+                progressBar.setProgress((position + 1) * 15);
             }
         });
     }
+
+    /**
+     * Sets up the ViewPager2 adapter and adds the fragments to it.
+     */
     public void setViewPagerAdapter() {
         ViewPager2Adapter viewPager2Adapter = new ViewPager2Adapter(this);
-        //creates an ArrayList of Fragments
         ArrayList<Fragment> fragmentList = new ArrayList<>();
         fragmentList.add(new question1());
         fragmentList.add(new question2());
@@ -94,7 +90,6 @@ public class QuestionActivity extends AppCompatActivity {
         fragmentList.add(new question6());
         fragmentList.add(new question7());
         fragmentList.add(new questionSubmit());
-        //sets the data for the adapter
         viewPager2Adapter.setData(fragmentList);
         viewPager2.setAdapter(viewPager2Adapter);
     }

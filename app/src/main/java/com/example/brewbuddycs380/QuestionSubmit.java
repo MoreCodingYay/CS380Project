@@ -3,6 +3,7 @@ package com.example.brewbuddycs380;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,7 @@ import java.util.EnumSet;
 /**
  * A fragment that handles the submission of user preferences in the BrewBuddy app.
  */
-public class questionSubmit extends Fragment {
+public class QuestionSubmit extends Fragment {
 
     private SharedViewModel viewModel;
     private static EnumSet<Properties> preferences = EnumSet.noneOf(Properties.class);
@@ -22,7 +23,7 @@ public class questionSubmit extends Fragment {
      * Default constructor for the questionSubmit fragment.
      * Required empty public constructor.
      */
-    public questionSubmit() {
+    public QuestionSubmit() {
     }
 
     /**
@@ -134,10 +135,14 @@ public class questionSubmit extends Fragment {
                     preferences.add(Properties.FLAVOR_FRUIT);
                 }
 
-                Intent intent = new Intent(getActivity(), RecommendationScreen.class);
-                UserService.updatePreferences(CoffeeRecommender.userPreferenceToString(preferences));
-                intent.putExtra("selectedProperties", preferences.toArray(new Properties[0]));
-                startActivity(intent);
+                String userPrefs = CoffeeRecommender.userPreferenceToString(preferences);
+                try {
+                    UserService.saveUserPreferences(UserService.getUserName(),userPrefs);
+                } catch (UserServiceException e) {
+                    Toast.makeText(getActivity(), "Preferences network error: not saved ", Toast.LENGTH_SHORT).show();
+                }
+                startActivity(new Intent(getActivity(), RecommendationScreen.class));
+
             }
         });
         return view;

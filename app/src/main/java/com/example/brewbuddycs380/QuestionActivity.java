@@ -1,6 +1,5 @@
 package com.example.brewbuddycs380;
 
-import android.content.Intent;
 import android.os.Build;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 /**
@@ -89,7 +88,7 @@ public class QuestionActivity extends AppCompatActivity {
         fragmentList.add(new question5());
         fragmentList.add(new question6());
         fragmentList.add(new question7());
-        fragmentList.add(new questionSubmit());
+        fragmentList.add(new QuestionSubmit());
         viewPager2Adapter.setData(fragmentList);
         viewPager2.setAdapter(viewPager2Adapter);
     }

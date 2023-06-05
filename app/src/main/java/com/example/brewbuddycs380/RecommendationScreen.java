@@ -1,14 +1,17 @@
 package com.example.brewbuddycs380;
 
+import android.content.Intent;
+import android.os.Build;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.core.content.ContextCompat;
 
-import java.util.Arrays;
-import java.util.EnumSet;
 import java.util.Random;
+import java.util.Set;
 
 /**
  * An activity that displays coffee recommendations based on user preferences in the BrewBuddy app.
@@ -26,6 +29,10 @@ public class RecommendationScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Changes the status bar color to enhance the visual appearance
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.statusbar_main));
+        }
 
         setContentView(R.layout.activity_reccomendation_screen);
         TextView recommendation = findViewById(R.id.recommendation);
@@ -34,9 +41,14 @@ public class RecommendationScreen extends AppCompatActivity {
         RatingBar ratingBar = findViewById(R.id.ratingBar);
         ratingBar.setRating(4.5F);
 
-        Properties[] selectedPropertiesArray = (Properties[]) getIntent().getSerializableExtra("selectedProperties");
-        EnumSet<Properties> userPreferences = EnumSet.copyOf(Arrays.asList(selectedPropertiesArray));
+        String userPreferencesString = null;
+        try {
+            userPreferencesString = UserService.getUserPreferences(UserService.getUserName());
+        } catch (UserServiceException e) {
+            Toast.makeText(getApplicationContext(), "Preferences network error: not retrieved ", Toast.LENGTH_SHORT).show();
+        }
 
+        Set<Properties> userPreferences = CoffeeRecommender.stringToUserPreference(userPreferencesString);
         Coffee topChoice = CoffeeRecommender.recommendTopCoffee(userPreferences);
         Coffee[] top5Choices = CoffeeRecommender.recommend5Coffee(userPreferences);
         String preferences = CoffeeRecommender.getPreferencesString(userPreferences);
@@ -63,9 +75,19 @@ public class RecommendationScreen extends AppCompatActivity {
                 randomCoffee = top5Choices[randomChoice];
             }
             lastRecommendation = randomCoffee;
+            ratingBar.setRating(3 + (2*(rand.nextFloat())));
             recommendation.setText(randomCoffee.getName() + " with " + preferences );
             description.setText(randomCoffee.getDescription());
             image.setImageResource(randomCoffee.getDrawableId());
+        });
+
+        ImageView home = findViewById(R.id.home);
+        /**
+         * Set a click listener on the "home" image.
+         * When clicked, goes back to questions
+         */
+        home.setOnClickListener(v -> {
+            startActivity(new Intent(getApplicationContext(), QuestionActivity.class));
         });
     }
 }

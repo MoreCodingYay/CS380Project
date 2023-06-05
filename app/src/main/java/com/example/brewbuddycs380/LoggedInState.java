@@ -5,6 +5,6 @@ public enum LoggedInState {
     loggedInNoPrefs,
     loggedInHavePrefs,
     loggedInPrefsRetrieved,
-    notLoggedIn;
+    notLoggedIn
 
 }

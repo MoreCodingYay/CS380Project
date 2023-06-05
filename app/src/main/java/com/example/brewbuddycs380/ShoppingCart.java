@@ -1,13 +1,12 @@
 package com.example.brewbuddycs380;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 
 /**
  * Activity for displaying the shopping cart.

@@ -2,12 +2,13 @@ package com.example.brewbuddycs380;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+
 import java.util.EnumSet;
 
 /**
@@ -16,7 +17,7 @@ import java.util.EnumSet;
 public class questionSubmit extends Fragment {
 
     private SharedViewModel viewModel;
-    private static EnumSet<Properties> preferences = EnumSet.noneOf(Properties.class);
+    private static final EnumSet<Properties> preferences = EnumSet.noneOf(Properties.class);
 
     /**
      * Default constructor for the questionSubmit fragment.
@@ -50,7 +51,7 @@ public class questionSubmit extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_question_submit, container, false);
-        Button submitBtn = (Button) view.findViewById(R.id.submit);
+        Button submitBtn = view.findViewById(R.id.submit);
         submitBtn.setOnClickListener(new View.OnClickListener() {
             /**
              * Called when the submit button is clicked.

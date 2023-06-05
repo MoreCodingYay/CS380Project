@@ -1,5 +1,6 @@
 package com.example.brewbuddycs380;
 
+import android.content.Intent;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -30,7 +31,8 @@ public class RecommendationScreen extends AppCompatActivity {
         // this is selected preferences in the form of an array
         Properties[] selectedPropertiesArray = (Properties[]) getIntent().getSerializableExtra("selectedProperties");
         // same preferences, in the form of an enumSet
-        EnumSet<Properties> userPreferences = EnumSet.copyOf(Arrays.asList(selectedPropertiesArray));
+        //bug where everything static just does not exist
+        EnumSet<Properties> userPreferences = (EnumSet<Properties>) CoffeeRecommender.stringToUserPreference(UserService.getPrefs());
 
 
         Coffee topChoice = CoffeeRecommender.recommendTopCoffee(userPreferences);
@@ -57,7 +59,13 @@ public class RecommendationScreen extends AppCompatActivity {
             description.setText(randomCoffee.getDescription());
             image.setImageResource(randomCoffee.getDrawableId());
         });
-
+        findViewById(R.id.addToCart).setOnClickListener(v-> {
+            UserService.shoppingCart.add(topChoice);
+        });
+        ImageView cart = findViewById(R.id.cart);
+        cart.setOnClickListener(v ->{
+             startActivity(new Intent(this, ShoppingCart.class));
+        });
 
     }
 }

@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -34,16 +35,17 @@ public class UserService {
         return savedUsername;
     }
 
-    private static String savedUsername = "";
-    private static String savedPrefs = "";
+    private volatile static String savedUsername = "";
+    private volatile static String savedPrefs = "";
 
-    public static LoggedInState getLoggedInState() {
+    public  static LoggedInState getLoggedInState() {
         return state;
     }
 
-    private static LoggedInState state = LoggedInState.notLoggedIn;
+    private volatile static LoggedInState state = LoggedInState.notLoggedIn;
 
-    public static ArrayList<Coffee> shoppingCart = new ArrayList<Coffee>();
+    public volatile static ArrayList<Coffee> shoppingCart = new ArrayList<Coffee>();
+
 
     /**
      * logged in state state machine function
@@ -76,7 +78,7 @@ public class UserService {
             }
             return savedPrefs;
         }else{
-            System.out.println("else???");
+            System.out.println("else??? "+state);
             return "";
         }
     }
@@ -106,7 +108,7 @@ public class UserService {
         return loggedIn;
     }
 
-    private static boolean loggedIn = false;
+    private volatile static boolean loggedIn = false;
     // Method to create a new account with the given username and password
     public static boolean createAccount(final String username, final String password) throws AccountTakenException, UserServiceException {
         // Have to use executor because database won't connect on main network thread for some reason
@@ -234,9 +236,15 @@ public class UserService {
      */
     public static boolean checkOut(){
         if(shoppingCart.size()==0)return false;
-        for(Coffee i : shoppingCart){
+        Map<Properties,Integer> prefs = CoffeeRecommender.stringToPreferencesAndWeights(getPrefs());
 
+        for(Coffee i : shoppingCart) {
+            CoffeeRecommender.updatePrefWeightHashmapWithCoffee(prefs, i);
         }
+        shoppingCart.clear();
+        String oldPrefs = getPrefs(), newPrefs = CoffeeRecommender.preferencWeightMapToString(prefs);
+        System.out.println("old: "+oldPrefs+" new: "+newPrefs);
+        updatePreferences(CoffeeRecommender.preferencWeightMapToString(prefs));
         return true;
     }
     // Helper method to hash a password using the SHA-512 algorithm
@@ -254,5 +262,10 @@ public class UserService {
         // Return the resulting hexadecimal string
         return sb.toString();
     }
+
+    public UserService(){
+        System.out.println("constructing user service");
+    }
+
 }
 

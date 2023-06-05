@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class CoffeeAdapter extends BaseAdapter {
     public CoffeeAdapter(AppCompatActivity mainActivity, String[] name, String[] description, int[] image) {
+        System.out.println("making new coffee adapter");
         this.mainActivity = mainActivity;
         this.name = name;
         this.description = description;
@@ -22,6 +23,8 @@ public class CoffeeAdapter extends BaseAdapter {
     int[] image;
     @Override
     public int getCount() {
+
+        System.out.println("get count returns: "+name.length);
         return name.length;
     }
 
@@ -37,6 +40,7 @@ public class CoffeeAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        System.out.println("getting view of coppee adapter" + name[position]);
         convertView = LayoutInflater.from(mainActivity).inflate(R.layout.coffee_adapter_layout, parent, false);
         TextView nameView, descView;
         ImageView imgView;

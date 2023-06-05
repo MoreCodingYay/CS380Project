@@ -84,5 +84,14 @@ public class RecommendationScreen extends AppCompatActivity {
              startActivity(new Intent(this, ShoppingCart.class));
         });
 
+        ImageView home = findViewById(R.id.home);
+        /**
+         * Set a click listener on the "home" image.
+         * When clicked, goes back to questions
+         */
+        home.setOnClickListener(v -> {
+            startActivity(new Intent(getApplicationContext(), QuestionActivity.class));
+        });
+
     }
 }

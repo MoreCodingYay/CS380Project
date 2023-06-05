@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -77,6 +78,8 @@ public class RecommendationScreen extends AppCompatActivity {
         //adds whatever coffee is reccommended on the main screen to the cart
         findViewById(R.id.addToCart).setOnClickListener(v-> {
             UserService.shoppingCart.add(lastRecommendation);
+            Toast.makeText(getApplicationContext(), "Added to cart", Toast.LENGTH_SHORT).show();
+
         });
         //goes to the cart
         ImageView cart = findViewById(R.id.cart);

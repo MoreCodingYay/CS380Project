@@ -25,7 +25,6 @@ public class CreateAccount extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        System.out.println("creating account");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
 

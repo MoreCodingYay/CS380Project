@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity{
                     if (success) {
                         usernameEditText.getText().clear();
                         passwordEditText.getText().clear();
-                        System.out.println("logged in state is: "+UserService.getLoggedInState());
                         if(UserService.getLoggedInState()==LoggedInState.loggedInPrefsRetrieved){
 
                             //if the logged-in user already has preferences, move to the recommendation screen

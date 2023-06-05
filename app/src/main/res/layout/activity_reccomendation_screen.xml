@@ -80,7 +80,6 @@
             app:layout_constraintVertical_bias="0.846" />
 
         <Button
-            android:id="@+id/order"
             android:layout_width="158dp"
             android:layout_height="54dp"
             android:layout_marginEnd="10dp"
@@ -95,7 +94,6 @@
             app:layout_constraintVertical_bias="0.846" />
 
         <ImageView
-            android:id="@+id/favorite"
             android:layout_width="wrap_content"
             android:layout_height="24dp"
             android:layout_marginRight="24dp"
@@ -136,7 +134,6 @@
         app:layout_constraintVertical_bias="0.788" />
 
     <ImageView
-        android:id="@+id/back"
         android:layout_width="44dp"
         android:layout_height="31dp"
         android:layout_marginBottom="268dp"

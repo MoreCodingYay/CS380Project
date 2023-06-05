@@ -4,7 +4,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-// These are all the toggle buttons in questions 1-7
+/**
+ * ViewModel class that holds the state of toggle buttons in the BrewBuddy app.
+ * It provides getters and setters for each toggle button's state.
+ */
 public class SharedViewModel extends ViewModel {
     private MutableLiveData<Boolean> icedToggle = new MutableLiveData<>();
     private MutableLiveData<Boolean> hotToggle = new MutableLiveData<>();
@@ -24,6 +27,8 @@ public class SharedViewModel extends ViewModel {
 
 
     // it is very repetitive from this point. Nothing interesting to see here
+    // if you add anymore buttons just copy and paste these two methods for it
+    // and change the name
     public void setIcedToggle(boolean state) {
         icedToggle.setValue(state);
     }

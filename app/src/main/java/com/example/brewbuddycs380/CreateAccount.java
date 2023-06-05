@@ -13,8 +13,16 @@ import androidx.core.content.ContextCompat;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
+/**
+ * This activity is responsible for creating a new user account.
+ */
 public class CreateAccount extends AppCompatActivity {
 
+    /**
+     * Called when the activity is starting.
+     *
+     * @param savedInstanceState the saved instance state Bundle
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

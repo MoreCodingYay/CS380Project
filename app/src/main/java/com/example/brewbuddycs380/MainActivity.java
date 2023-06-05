@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity{
         createAccountTxt.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // go to create account activity
-                startActivity(new Intent(MainActivity.this, QuestionActivity.class));
+                startActivity(new Intent(MainActivity.this, CreateAccount.class));
 
             }
         });

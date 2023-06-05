@@ -9,9 +9,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="411dp"
+        android:layout_width="match_parent"
         android:layout_height="400dp"
-        android:layout_margin="16dp"
+        android:layout_margin="0dp"
         android:background="@drawable/rounded_edges"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +22,8 @@
 
         <TextView
             android:id="@+id/recommendation"
-            android:layout_width="384dp"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="20dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_bold"
             android:text="Recommendation"
@@ -50,7 +51,8 @@
 
         <TextView
             android:id="@+id/description"
-            android:layout_width="372dp"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="20dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_bold"
             android:text="Description of the coffee recommendation"
@@ -96,12 +98,11 @@
             android:id="@+id/favorite"
             android:layout_width="wrap_content"
             android:layout_height="24dp"
-            android:layout_marginStart="275dp"
+            android:layout_marginRight="24dp"
             android:src="@drawable/favorite"
             app:layout_constraintBottom_toTopOf="@+id/recommendation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/ratingBar"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.761"
             app:tint="@color/pink" />

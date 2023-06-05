@@ -4,25 +4,38 @@ import android.widget.ImageView;
 
 import java.util.*;
 
-// Define an enum to represent the different properties that a coffee can have
+/**
+ * Define an enum to represent the different properties that a coffee can have.
+ */
 enum Properties {
     HOT(0), ICED(1), STRONG(2), WEAK(3), SWEET(4),
     CREAMY(5), BLACK(6), FOAM(7), NOFOAM(8), DECAF(9), BITTER(10),
     FLAVOR_FRUIT(11), FLAVOR_CHOCOLATE(12), FLAVOR_CARAMEL(13), FLAVOR_VANILLA(14);
 
-    // Each property has an index value so it can be converted to a series of numbers to go in the database
-    private final int index;
 
+    private final int index;
+    /**
+     * Constructs a Properties enum with the given index.
+     *
+     * @param index the index value of the property
+     */
     Properties(int index) {
         this.index = index;
     }
 
+    /**
+     * Returns the index value of the property.
+     *
+     * @return the index value
+     */
     public int getIndex() {
         return index;
     }
 }
 
-// Define a class to represent a coffee object
+/**
+ * Define a class to represent a coffee object.
+ */
 class Coffee implements Comparable<Coffee> {
     private  String name; // The name of the coffee
     private String description;
@@ -30,17 +43,37 @@ class Coffee implements Comparable<Coffee> {
     private Set<Properties> coffeeProperties; // The properties of the coffee
     private int drawableId;
 
+    /**
+     * Returns the name of the coffee.
+     *
+     * @return the name of the coffee
+     */
     public String getName(){
         return name;
     }
 
+    /**
+     * Returns the drawable ID of the coffee image.
+     *
+     * @return the drawable ID of the coffee image
+     */
     public int getDrawableId(){
         return drawableId;
     }
 
+    /**
+     * Returns the description of the coffee.
+     *
+     * @return the description of the coffee
+     */
     public String getDescription(){
         return description;
     }
+    /**
+     * Sets the similarity score of the coffee.
+     *
+     * @param s the similarity score
+     */
     public void setSimilarityScore(int s){
         this.similarityScore =  s;
     }
@@ -59,7 +92,14 @@ class Coffee implements Comparable<Coffee> {
 
 
 
-    // Constructor to create a new Coffee object
+    /**
+     * Constructs a new Coffee object with the specified properties.
+     *
+     * @param name            the name of the coffee
+     * @param coffeeProperties the properties of the coffee
+     * @param drawableId      the drawable ID of the coffee image
+     * @param description     the description of the coffee
+     */
     public Coffee(String name, Set<Properties> coffeeProperties,int drawableId, String description) {
         this.name = name;
         this.coffeeProperties = coffeeProperties;
@@ -67,7 +107,12 @@ class Coffee implements Comparable<Coffee> {
         this.drawableId = drawableId;
     }
 
-    // Method to calculate the similarity score of the coffee with respect to the user's preference
+    /**
+     * Calculates the similarity score of the coffee with respect to the user's preference.
+     *
+     * @param userPreference the user's preference
+     * @return the similarity score
+     */
     public int calculateSimilarityScore(Set<Properties> userPreference) {
         int similarityScore = 0;
         for (Properties property : userPreference) {
@@ -85,10 +130,14 @@ class Coffee implements Comparable<Coffee> {
     public final Set<Properties> getCoffeeProperties(){
         return this.coffeeProperties;
     }
-    // Return the difference between the similarity scores of the two coffees
-    // A positive value means this coffee has a lower similarity score than the coffee being compared to
-    // A negative value means this coffee has a higher similarity score than the coffee being compared to
-    // Meaning when you poll() an item from the queue, the first will be the most similar, and so on
+    /**
+     * Compares this coffee with another coffee based on their similarity scores.
+     *
+     * @param coffee the coffee to compare to
+     * @return the difference between the similarity scores of the two coffees
+     *         A positive value means this coffee has a lower similarity score than the coffee being compared to.
+     *         A negative value means this coffee has a higher similarity score than the coffee being compared to.
+     */
     @Override
     public int compareTo(Coffee coffee) {
         return coffee.similarityScore - this.similarityScore;
@@ -100,8 +149,16 @@ class Coffee implements Comparable<Coffee> {
 }
 
 
-// Define a class with static methods to recommend coffees based on the user's preference
+/**
+ * Define a class with static methods to recommend coffees based on the user's preference.
+ */
 public class CoffeeRecommender {
+    /**
+     * Recommends the top 5 coffees based on the user's preference.
+     *
+     * @param userPreference the user's preference
+     * @return an array of the top 5 recommended coffee objects
+     */
     public static Coffee[] recommend5Coffee(Set<Properties> userPreference) {
         // Create a priority queue to store the recommended coffee objects
         // I chose this because it automatically sorts the coffee objects
@@ -123,6 +180,12 @@ public class CoffeeRecommender {
         return topRecommendedCoffees;
     }
 
+    /**
+     * Recommends the top coffee based on the user's preference.
+     *
+     * @param userPreference the user's preference
+     * @return the top recommended coffee object
+     */
     public static Coffee recommendTopCoffee(Set<Properties> userPreference) {
         // Create a priority queue to store the recommended coffee objects
         PriorityQueue<Coffee> recommendedCoffees = new PriorityQueue<>();
@@ -137,7 +200,12 @@ public class CoffeeRecommender {
         return recommendedCoffees.poll();
     }
 
-    // Method to return a String representation of the user prefernces
+    /**
+     * Returns a String representation of the user's preferences.
+     *
+     * @param userPreferences the user's preferences
+     * @return a String representation of the user's preferences
+     */
     public static String getPreferencesString(Set<Properties> userPreferences) {
         StringBuilder sb = new StringBuilder();
         for (Properties property : userPreferences) {
@@ -175,8 +243,12 @@ public class CoffeeRecommender {
         return sb.toString();
     }
 
-    // To store preferences in the database easier, this method converts the enums to a string representation
-    // these correspond to the number of the enums, separate by a comma
+    /**
+     * Converts the user's preference to a string representation.
+     *
+     * @param userPreference the user's preference
+     * @return a string representation of the user's preference
+     */
     public static String userPreferenceToString(Set<Properties> userPreference) {
         StringBuilder sb = new StringBuilder();
         for (Properties property : userPreference) {
@@ -191,9 +263,10 @@ public class CoffeeRecommender {
     }
 
     /**
-     * returns a set of the top properties from a string of enums
-     * @param string
-     * @return
+     * Converts a string representation of user's preference to a set of properties.
+     *
+     * @param string the string representation of user's preference
+     * @return a set of properties representing the user's preference
      */
     public static Set<Properties> stringToUserPreference(String string) {
         // Creat en empty set of properties enums
@@ -234,6 +307,11 @@ public class CoffeeRecommender {
         return userPreference;
     }
 
+    /**
+     * makes a map with the preferences mapped to the weights of each pereferenc for a
+     * @param string of preferences
+     * @return
+     */
     public static Map<Properties, Integer> stringToPreferencesAndWeights(String string){
         Map<Properties, Integer> userPreference = new HashMap<Properties,Integer>();
         String[] indices = string.split(",");

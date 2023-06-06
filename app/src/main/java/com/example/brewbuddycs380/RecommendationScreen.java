@@ -30,9 +30,7 @@ public class RecommendationScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Changes the status bar color to enhance the visual appearance
-        if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.statusbar_main));
-        }
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.statusbar_main));
 
         setContentView(R.layout.activity_reccomendation_screen);
         TextView recommendation = findViewById(R.id.recommendation);
@@ -53,10 +51,14 @@ public class RecommendationScreen extends AppCompatActivity {
         Coffee[] top5Choices = CoffeeRecommender.recommend5Coffee(userPreferences);
         String preferences = CoffeeRecommender.getPreferencesString(userPreferences);
 
-        /**
+        /*
          * Set the text for the recommendation TextView with the top choice coffee and user preferences.
          */
-        recommendation.setText(topChoice.getName() + " with " + preferences );
+        if(preferences.isEmpty()||preferences.equals(" ")){
+            recommendation.setText(topChoice.getName());
+        }else{
+            recommendation.setText(topChoice.getName() + " with " + preferences );
+        }
         description.setText(topChoice.getDescription());
         image.setImageResource(topChoice.getDrawableId());
 
@@ -76,7 +78,11 @@ public class RecommendationScreen extends AppCompatActivity {
             }
             lastRecommendation = randomCoffee;
             ratingBar.setRating(3 + (2*(rand.nextFloat())));
-            recommendation.setText(randomCoffee.getName() + " with " + preferences );
+            if(preferences.isEmpty()||preferences.equals(" ")){
+                recommendation.setText(randomCoffee.getName());
+            }else{
+                recommendation.setText(randomCoffee.getName() + " with " + preferences );
+            }
             description.setText(randomCoffee.getDescription());
             image.setImageResource(randomCoffee.getDrawableId());
         });

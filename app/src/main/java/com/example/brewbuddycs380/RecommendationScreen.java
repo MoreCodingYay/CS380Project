@@ -81,6 +81,17 @@ public class RecommendationScreen extends AppCompatActivity {
             image.setImageResource(randomCoffee.getDrawableId());
         });
 
+        //adds whatever coffee is recommended on the main screen to the cart
+        findViewById(R.id.addToCart).setOnClickListener(v-> {
+            UserService.shoppingCart.add(lastRecommendation);
+        });
+
+        //goes to the cart
+        ImageView cart = findViewById(R.id.cart);
+        cart.setOnClickListener(v ->{
+            startActivity(new Intent(this, ShoppingCart.class));
+        });
+
         ImageView home = findViewById(R.id.home);
         /**
          * Set a click listener on the "home" image.

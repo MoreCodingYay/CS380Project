@@ -20,6 +20,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -61,6 +63,8 @@ public class UserService {
     static final String USER = "sql9623301";
     static final String PASS = "3JgAGb5DTg";
     private static String userName;
+    public static ArrayList<Coffee> shoppingCart = new ArrayList<Coffee>();
+
 
     /**
      * Sets the username for the current session if it's not already set.
@@ -267,5 +271,24 @@ public class UserService {
             sb.append(String.format("%02x", b));
         }
         return sb.toString();
+    }
+
+    /**
+     * adds coffee to the cart
+     * @param coffee
+     */
+    public static void addToCart(Coffee coffee){
+        shoppingCart.add(coffee);
+    }
+
+    /**
+     * updates the user's preferences with the coffee's they selected.
+     * @return
+     */
+    public static boolean checkOut(){
+        if(shoppingCart.size()==0)
+            return false;
+        shoppingCart.clear();
+        return true;
     }
 }

@@ -367,19 +367,17 @@ public class CoffeeRecommender {
 
     public static void updatePrefWeightHashmapWithCoffee(Map<Properties,Integer> map, Coffee coffee){
         //to avoid concurrent access exceptions, makes arraylists with lists of the properties to change after going through the hashmap
+        //list to increment, list to decrement
         ArrayList<Properties> inc = new ArrayList<>(), dec = new ArrayList<>();
 
         for(Map.Entry<Properties, Integer> i : map.entrySet()){
             if(coffee.getCoffeeProperties().contains(i.getKey())){
                 inc.add(i.getKey());
-                //map.replace(i.getKey(), i.getValue()+2);
+
             }else{
-                //if(i.getValue()>1){
+
                     dec.add(i.getKey());
-                    //map.replace(i.getKey(), i.getValue()-1);
-               // }else{
-                 //   map.remove(i.getKey());
-                //}
+
             }
 
 

@@ -50,7 +50,12 @@ public class RecommendationScreen extends AppCompatActivity {
         /**
          * Set the text for the recommendation TextView with the top choice coffee and user preferences.
          */
-        recommendation.setText(topChoice.getName() + " with " + preferences );
+        if(preferences.isEmpty()||preferences.equals(" ")){
+            recommendation.setText(topChoice.getName());
+        }else{
+            recommendation.setText(topChoice.getName() + " with " + preferences );
+        }
+
         description.setText(topChoice.getDescription());
         image.setImageResource(topChoice.getDrawableId());
 

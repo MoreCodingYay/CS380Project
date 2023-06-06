@@ -124,31 +124,7 @@ public class UserService {
             }
             return success;
 
-//            try (Connection connection = DriverManager.getConnection(URL, USER, PASS)) {
-//                // Check if the username is already taken
-//                String checkSql = "SELECT * FROM sql9619545.logins WHERE username = ?";
-//                PreparedStatement checkStatement = connection.prepareStatement(checkSql);
-//                checkStatement.setString(1, username);
-//                ResultSet checkResultSet = checkStatement.executeQuery();
-//                if (checkResultSet.next()) {
-//                    // Username is already taken
-//                    throw new AccountTakenException("Username is already taken");
-//                }
 //
-//                // Hash the password using the SHA-512 algorithm
-//                String hashedPassword = hashPassword(password);
-//                // SQL statement to insert a new record into the logins table
-//                String sql = "INSERT INTO sql9619545.logins (username, password) VALUES (?, ?)";
-//                PreparedStatement statement = connection.prepareStatement(sql);
-//                statement.setString(1, username);
-//                statement.setString(2, hashedPassword);
-//                int rowsInserted = statement.executeUpdate();
-//                return rowsInserted > 0;
-//            } catch (SQLException e) {
-//                throw new UserServiceException("SQLException: " + e.getMessage());
-//            } catch (NoSuchAlgorithmException e) {
-//                throw new UserServiceException("NoSuchAlgorithmException: " + e.getMessage());
-//            }
 
 
         });
@@ -171,24 +147,7 @@ public class UserService {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Future<Boolean> future = executor.submit(() -> {
 
-            /*
-            try (Connection connection = DriverManager.getConnection(URL, USER, PASS)) {
-                // Hash the password using the SHA-512 algorithm
-                String hashedPassword = hashPassword(password);
-                // SQL statement to query the logins table for a record with the given username and hashed password
-                String sql = "SELECT * FROM sql9619545.logins WHERE username = ? AND password = ?";
-                PreparedStatement statement = connection.prepareStatement(sql);
-                statement.setString(1, username);
-                statement.setString(2, hashedPassword);
-                ResultSet resultSet = statement.executeQuery();
-                return resultSet.next();
-            } catch (SQLException e) {
-                throw new UserServiceException("SQLException: " + e.getMessage());
-            } catch (NoSuchAlgorithmException e) {
-                throw new UserServiceException("NoSuchAlgorithmException: " + e.getMessage());
-            }
 
-             */
             String hashedPassword = null;
             try {
                 hashedPassword = hashPassword(password);

@@ -9,21 +9,21 @@ import androidx.lifecycle.ViewModel;
  * It provides getters and setters for each toggle button's state.
  */
 public class SharedViewModel extends ViewModel {
-    private MutableLiveData<Boolean> icedToggle = new MutableLiveData<>();
-    private MutableLiveData<Boolean> hotToggle = new MutableLiveData<>();
-    private MutableLiveData<Boolean> lightRoastToggle = new MutableLiveData<>();
-    private MutableLiveData<Boolean> darkRoastToggle = new MutableLiveData<>();
-    private MutableLiveData<Boolean> sweetToggle = new MutableLiveData<>();
-    private MutableLiveData<Boolean> mildSweetToggle = new MutableLiveData<>();
-    private MutableLiveData<Boolean> darkSweetToggle = new MutableLiveData<>();
-    private MutableLiveData<Boolean> creamToggle = new MutableLiveData<>();
-    private MutableLiveData<Boolean> blackToggle = new MutableLiveData<>();
-    private MutableLiveData<Boolean> decafToggle = new MutableLiveData<>();
-    private MutableLiveData<Boolean> foamToggle = new MutableLiveData<>();
-    private MutableLiveData<Boolean> vanillaToggle = new MutableLiveData<>();
-    private MutableLiveData<Boolean> chocolateToggle = new MutableLiveData<>();
-    private MutableLiveData<Boolean> caramelToggle = new MutableLiveData<>();
-    private MutableLiveData<Boolean> fruityToggle = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> icedToggle = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> hotToggle = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> lightRoastToggle = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> darkRoastToggle = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> sweetToggle = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> mildSweetToggle = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> darkSweetToggle = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> creamToggle = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> blackToggle = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> decafToggle = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> foamToggle = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> vanillaToggle = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> chocolateToggle = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> caramelToggle = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> fruityToggle = new MutableLiveData<>();
 
 
     // it is very repetitive from this point. Nothing interesting to see here

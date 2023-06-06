@@ -1,13 +1,13 @@
 package com.example.brewbuddycs380;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 
-import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.Random;
 
@@ -77,11 +77,22 @@ public class RecommendationScreen extends AppCompatActivity {
         //adds whatever coffee is reccommended on the main screen to the cart
         findViewById(R.id.addToCart).setOnClickListener(v-> {
             UserService.shoppingCart.add(lastRecommendation);
+            Toast.makeText(getApplicationContext(), "Added to cart", Toast.LENGTH_SHORT).show();
+
         });
         //goes to the cart
         ImageView cart = findViewById(R.id.cart);
         cart.setOnClickListener(v ->{
              startActivity(new Intent(this, ShoppingCart.class));
+        });
+
+        ImageView home = findViewById(R.id.home);
+        /**
+         * Set a click listener on the "home" image.
+         * When clicked, goes back to questions
+         */
+        home.setOnClickListener(v -> {
+            startActivity(new Intent(getApplicationContext(), QuestionActivity.class));
         });
 
     }

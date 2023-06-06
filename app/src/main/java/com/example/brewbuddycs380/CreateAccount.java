@@ -2,16 +2,13 @@ package com.example.brewbuddycs380;
 
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 import androidx.core.content.ContextCompat;
-
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
 
 /**
  * This activity is responsible for creating a new user account.
@@ -25,7 +22,6 @@ public class CreateAccount extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        System.out.println("creating account");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
 
@@ -36,16 +32,16 @@ public class CreateAccount extends AppCompatActivity {
         }
 
         // Find create account button
-        Button createAccountButton = (Button) findViewById(R.id.createAccount);
+        Button createAccountButton = findViewById(R.id.createAccount);
 
         // Set onClickListener for create account button
         createAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Set username, password, and confirm password EditText fields
-                EditText usernameEditText = (EditText) findViewById(R.id.username);
-                EditText passwordEditText = (EditText) findViewById(R.id.password);
-                EditText confirmPasswordEditText = (EditText) findViewById(R.id.confirmPassword);
+                EditText usernameEditText = findViewById(R.id.username);
+                EditText passwordEditText = findViewById(R.id.password);
+                EditText confirmPasswordEditText = findViewById(R.id.confirmPassword);
 
                 // Get text from username, password, and confirm password EditText fields
                 String username = usernameEditText.getText().toString();

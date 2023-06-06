@@ -8,23 +8,32 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * CoffeeAdapter class for populating a ListView with coffee items.
+ */
 public class CoffeeAdapter extends BaseAdapter {
+    AppCompatActivity mainActivity;
+    String[] name;
+    String[] description;
+    int[] image;
+
+    /**
+     * Constructs a CoffeeAdapter with the given data.
+     *
+     * @param mainActivity the activity where the adapter is used
+     * @param name         the array of coffee names
+     * @param description  the array of coffee descriptions
+     * @param image        the array of coffee images
+     */
     public CoffeeAdapter(AppCompatActivity mainActivity, String[] name, String[] description, int[] image) {
-        System.out.println("making new coffee adapter");
         this.mainActivity = mainActivity;
         this.name = name;
         this.description = description;
         this.image = image;
     }
 
-    AppCompatActivity mainActivity;
-    String[] name;
-    String[] description;
-    int[] image;
     @Override
     public int getCount() {
-
-        System.out.println("get count returns: "+name.length);
         return name.length;
     }
 
@@ -40,12 +49,11 @@ public class CoffeeAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        System.out.println("getting view of coppee adapter" + name[position]);
         convertView = LayoutInflater.from(mainActivity).inflate(R.layout.coffee_adapter_layout, parent, false);
         TextView nameView, descView;
         ImageView imgView;
-        nameView=convertView.findViewById(R.id.nameView);
-        descView=convertView.findViewById(R.id.descriptionView);
+        nameView = convertView.findViewById(R.id.nameView);
+        descView = convertView.findViewById(R.id.descriptionView);
         imgView = convertView.findViewById(R.id.imageView);
         nameView.setText(name[position]);
         descView.setText(description[position]);

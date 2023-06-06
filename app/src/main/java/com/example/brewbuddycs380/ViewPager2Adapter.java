@@ -1,9 +1,9 @@
 package com.example.brewbuddycs380;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+
 import java.util.ArrayList;
 
 // for use with the QuestionActivity class

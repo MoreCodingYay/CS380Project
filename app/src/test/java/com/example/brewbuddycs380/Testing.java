@@ -10,7 +10,7 @@ public class Testing {
         try {
             assertFalse(UserService.createAccount("2","2"));
             assertFalse(UserService.createAccount("jeff'; DROP TABLE LOGINS; --","2"));
-            assertTrue(UserService.createAccount((""+(int)Math.random()*100000),(""+(int)Math.random()*100000)));
+            assertTrue(UserService.createAccount((String.valueOf((int) Math.random() * 100000)),(String.valueOf((int) Math.random() * 100000))));
         } catch (AccountTakenException e) {
             throw new RuntimeException(e);
         } catch (UserServiceException e) {

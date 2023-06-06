@@ -2,11 +2,6 @@ package com.example.brewbuddycs380;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -26,10 +21,6 @@ class UserServiceException extends Exception {
 }
 
 public class UserService {
-    // Connection details for the MySQL server
-    static final String URL = "jdbc:mysql://sql9.freemysqlhosting.net/sql9619545";
-    static final String USER = "sql9619545";
-    static final String PASS = "TALaShDLMD";
 
     public static String getUsername() {
         return savedUsername;
@@ -98,18 +89,28 @@ public class UserService {
         return true;
     }
     /**
-     *
-     * @return whether or not the user has taken the preferences test before and has some on file
+     * @return whether the user has taken the preferences test before and has some on file
      */
     public static boolean haveRecordedPrefs(){
         return state==LoggedInState.loggedInHavePrefs;
     }
+    /**
+     * @return whether the user is logged in
+     */
     public static boolean isLoggedIn() {
         return loggedIn;
     }
 
     private volatile static boolean loggedIn = false;
-    // Method to create a new account with the given username and password
+    /**
+     * Creates a new user account with the given username and password.
+     *
+     * @param username the username for the account
+     * @param password the password for the account
+     * @return true if the account is successfully created, false otherwise
+     * @throws AccountTakenException if the username is already taken
+     * @throws UserServiceException if an error occurs while creating the account
+     */
     public static boolean createAccount(final String username, final String password) throws AccountTakenException, UserServiceException {
         // Have to use executor because database won't connect on main network thread for some reason
         // This object makes a new thread just for the database
@@ -123,10 +124,6 @@ public class UserService {
 
             }
             return success;
-
-//
-
-
         });
         try {
             return future.get();
@@ -142,12 +139,17 @@ public class UserService {
         }
     }
 
-    // Method to log in with the given username and password
+    /**
+     * Logs in with the given username and password.
+     *
+     * @param username the username for the account
+     * @param password the password for the account
+     * @return true if the login is successful, false otherwise
+     * @throws UserServiceException if an error occurs while logging in
+     */
     public static boolean login(final String username, final String password) throws UserServiceException {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Future<Boolean> future = executor.submit(() -> {
-
-
             String hashedPassword = null;
             try {
                 hashedPassword = hashPassword(password);
@@ -163,7 +165,7 @@ public class UserService {
         });
         try {
             if(future.get()){
-                System.out.println("updateing user state: "+ UserService.getLoggedInState());
+                System.out.println("Updating user state: "+ UserService.getLoggedInState());
 
                 loggedIn=true;
                 return true;
@@ -180,6 +182,7 @@ public class UserService {
             executor.shutdown();
         }
     }
+
 
     /**
      * adds coffee to the cart
@@ -206,7 +209,13 @@ public class UserService {
         updatePreferences(CoffeeRecommender.preferencWeightMapToString(prefs));
         return true;
     }
-    // Helper method to hash a password using the SHA-512 algorithm
+    /**
+     * Helper method to hash a password using the SHA-512 algorithm.
+     *
+     * @param password the password to be hashed
+     * @return the hashed password as a hexadecimal string
+     * @throws NoSuchAlgorithmException if the SHA-512 algorithm is not available
+     */
     private static String hashPassword(String password) throws NoSuchAlgorithmException {
         // Get an instance of the SHA-512 message digest
         MessageDigest md = MessageDigest.getInstance("SHA-512");
@@ -221,6 +230,7 @@ public class UserService {
         // Return the resulting hexadecimal string
         return sb.toString();
     }
+
 
     public UserService(){
         System.out.println("constructing user service");
